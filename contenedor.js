@@ -46,6 +46,23 @@ class Contenedor{
         }
     }
 
+    async update(id, body){
+        try{
+            const product = {
+            title: body.title,
+            price: body.price,
+            thumbnail: "",
+            id: id
+            } 
+            const data=JSON.parse(fs.readFileSync('./productos.txt', 'utf-8'), 'utf8')
+            const updateIndex= data.findIndex((producto)=> producto.id==id)
+            data[updateIndex]=product
+            return product
+        }catch(err){
+            console.log(err.message)
+        }
+    }
+
     async getAll(){
         try{
             const data=await fs.promises.readFile(this.fileName, 'utf-8')
@@ -77,6 +94,18 @@ class Contenedor{
             fs.unlinkSync('./productos.txt')
         }catch(err){
             console.log(err.message)
+        }
+    }
+
+    async getRandom(){
+        try{
+            const file= await fs.promises.readFile(this.fileName,"utf-8");
+            const parsedFile= JSON.parse(file)
+            const random=parsedFile[Math.round(Mand.random()*(parsedFile.length-1))]
+            return random
+        }
+        catch(error){
+            console.log(error)
         }
     }
 }
