@@ -1,12 +1,12 @@
-const express= requier('express')
+const express= require('express')
 const Products= require ('./Contenedor')
 const app=express()
 const productsRoute= express.Router()
 const PORT=8080
 
-app.use (epress.json())
+app.use (express.json())
 app.puse(express.urlencoded({extended:true}))
-app.use('/static', express.static(_dirname + '/public'))
+app.use('/static', express.static(__dirname + '/public'))
 app.use('/api/productos', productsRoute)
 const storeProducts=new Products()
 
