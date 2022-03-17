@@ -1,90 +1,70 @@
 const fs = require('fs')
 
 class Contenedor{
-    constructor(fileName){
-        this.fileName=fileName;
+    constructor(){
+        this.products=[];
+        this.id=0;
     }
 
-    async save(object){
-        let id = 1;
-        let file=null
-        let fileContent=[]
+    async save(product){
         try{
-            file= await fs.promises.readFile(this.fileName, 'utf-8')
+            this.id++;
+            const newProduct={
+                title: product.title,
+                price: product.price,
+                id: this.id
+            }
+            this.products.push(newProduct)
+            return newProduct
         }catch(error){
-            if (error.code === "ENOENT") {
-                await fs.promises.writeFile(this.fileName, "[]", 'utf-8')
-                file= await fs.promises.readFile(this.fileName, 'utf-8')
-            }else console.log('asd '+error);
+            throw new Error("error al ingresar un nuevo producto")
+            }
         }
-        const data= JSON.parse(file)
-        id= data.length + 1
-        object.id=id
-        data.push(object)
+
+    async getById(productID){
         try{
-            await fs.promises.writeFile(this.fileName, JSON.stringify(data,null,2))
-            return object.id
+            return this.products.find(product=>product.id==parseInt(productID))
         }catch(err){
-            throw new Error('Error al escribir en el archivo')
+            throw new Error("error al retornar un producto especifico")
         }
     }
 
-
-    async getById(id){
+    async update(productID, product){
         try{
-            const data= await fs.promises.readFile(this.fileName, 'utf-8')
-            const product= JSON.parse(data)
-            const prodID= product.find((prod)=>prod.id===id)
-            if (prodID){
-                return prodID
-            }
-            else{
-                return null
-            }
+            const tempProducts=[]
+            let updatedProd={}
+            this.products.forEach(prod=>{
+                if (prod.id==productID){
+                    updatedProd = {
+                        title: product.title,
+                        price: product.price,
+                        id: productID
+                    } 
+                    tempProducts.push(updatedProd)
+                }else{
+                    tempProducts.push(prod)
+                }
+            })
+            this.products=tempProducts
+            return updatedProd
         }catch(err){
-            console.log(err.message)
-        }
-    }
-
-    async update(id, body){
-        try{
-            const product = {
-            title: body.title,
-            price: body.price,
-            thumbnail: "",
-            id: id
-            } 
-            const data=JSON.parse(fs.readFileSync('./productos.txt', 'utf-8'), 'utf8')
-            const updateIndex= data.findIndex((producto)=> producto.id==id)
-            data[updateIndex]=product
-            return product
-        }catch(err){
-            console.log(err.message)
+            throw new Error("error al actualizar un producto")
         }
     }
 
     async getAll(){
         try{
-            const data=await fs.promises.readFile(this.fileName, 'utf-8')
-            return JSON.parse(data)
+            return this.products
         }catch(err){
-            throw new Error('Error al leer el archivo')
+            throw new Error('Error al mostrar los datos')
         }
     }
 
-    async deleteByID(id){
+    async deleteByID(productID){
         try{
-            const data=JSON.parse(fs.readFileSync('./productos.txt', 'utf-8'), 'utf8')
-            const toDelete= data.findIndex((product)=> product.id==id)
-            if (toDelete===-1)
-                console.log('No se encontró el ID')
-            else{
-                const deleteData= data.splice(toDelete,1)
-                await fs.promises.writeFile('./productos.txt', JSON.stringify(data,null,5))
-                console.log('Se eliminó el id' +deleteData)
-            }
+            this.products=this.products.filter(prod=> prod.id != productID)
         }catch(err){
-            console.log(err.message)
+            throw new Error('Error al borrar producto por id')
         }
     }
 
@@ -109,7 +89,5 @@ class Contenedor{
         }
     }
 }
-
-const contenedor = new Contenedor("productos.txt");
 
 module.exports= Contenedor
