@@ -3,4 +3,7 @@ html
     body
         include navbar.pug
         div.container
-            include form.pug
+            if vista
+                include form.pug
+            else
+                include lista.pug

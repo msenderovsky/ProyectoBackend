@@ -1,0 +1,19 @@
+h1 Productos
+if prods== ""
+    h3 No agregaste ningún producto aún
+else
+    table(class="table")
+        thead
+            tf
+                th(scole="col") ID
+                th(scole="col") Nombre
+                th(scole="col") Precio
+                th(scole="col") Imagen
+        tbody
+            each prod in prods
+                tf
+                    th(scole="row")= prod.id
+                    td= prod.title
+                    td= prod.price
+                    td
+                        img(src=prod.thumbnail, alt=prod.title, width='25')

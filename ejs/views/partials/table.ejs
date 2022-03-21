@@ -1,0 +1,31 @@
+<h1>
+    Lista de Productos
+</h1>
+<div>
+    <table class="table">
+        <thead>
+            <th scope="col">
+                #
+            </th>
+            <th scope="col">
+                Title
+            </th>
+            <th scope="col">
+                Price
+            </th>
+            <th scope="col">
+                Image
+            </th>
+        </thead>
+        <tbody>
+            <% for (let i = 0; i < prods.length; i++) { %>
+                <tr>
+                    <td><%=prods[i].id%></td>
+                    <td><%=prods[i].title%></td>
+                    <td><%=prods[i].price%></td>
+                    <td><img src="<%=prods[i].thumbnail%>" alt="<%=prods[i].title%>" width="25"></td>
+                </tr>
+            <% }  %>
+        </tbody>
+    </table>
+</div>

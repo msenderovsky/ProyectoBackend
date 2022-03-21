@@ -13,18 +13,23 @@ app.use (express.json())
 app.use(express.urlencoded({extended: true}))
 app.use('/productos', routerProd)
 
+let vista= Boolean(true)
+
 app.get('/', (req, res) => {
-    res.render('index', {title:"asda"});
+    vista=true
+    res.render('index', {vista});
 })
 
 routerProd
     .get('/', (req, res) => {
         const prods = storeProducts.getAll()
-        res.render('table', {prods});
+        vista = false
+        res.render('index', {prods, vista});
     })
     .post('/', (req, res) => {
         const newProduct= storeProducts.save(req.body)
-        res.render("form")
+        vista= true
+        res.render("index", {vista})
     })
 
 const PORT = 8080
