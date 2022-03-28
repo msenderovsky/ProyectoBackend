@@ -12,15 +12,15 @@ class Contenedor{
             const newProduct={
                 title: product.title,
                 price: product.price,
-                thumbnail: product.photo,
+                url: product.url,
                 id: this.id
             }
             this.products.push(newProduct)
             return newProduct
         }catch(error){
             throw new Error("error al ingresar un nuevo producto")
-            }
         }
+    }
 
     getById(productID){
         try{
@@ -39,7 +39,7 @@ class Contenedor{
                     updatedProd = {
                         title: product.title,
                         price: product.price,
-                        thumbnail: product.photo,
+                        url: product.url,
                         id: productID
                     } 
                     tempProducts.push(updatedProd)

@@ -19,8 +19,8 @@ class Contenedor{
             return newProduct
         }catch(error){
             throw new Error("error al ingresar un nuevo producto")
-            }
         }
+    }
 
     getById(productID){
         try{
