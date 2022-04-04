@@ -29,7 +29,7 @@ cartRoute.post('/:id/products', async (req,res)=> {
     try{
         const product= await storeProducts.getProduct(req.body.id)
         const addProduct = await storeCarts.addCartProduct(req.params.id, product)
-        res.status(200).json(product)
+        res.status(200).json(addProduct)
     }catch(error){
         res.status(500).json({error: error.message})
     }
@@ -44,9 +44,9 @@ cartRoute.delete('/:id', async (req,res)=> {
     }
 })
 
-cartRoute.delete('/:idcart/products/:idprod', async (req,res)=> {
+cartRoute.delete('/:cartid/products/:prodid', async (req,res)=> {
     try{
-        const deletedProduct= await storeCarts.deleteCartProduct(req.params.idcart, req.params.idprod)
+        const deletedProduct= await storeCarts.deleteCartProduct(req.params.cartid, req.params.prodid)
         res.status(200).json(deletedProduct)
     }catch(error){
         res.status(500).json({error: error.message})

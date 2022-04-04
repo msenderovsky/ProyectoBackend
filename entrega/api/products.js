@@ -4,7 +4,7 @@ const fs = require('fs').promises
 class Products {
     constructor(){
         this.products = [],
-        this.route = './db/productos.txt'
+        this.route = './db/products.txt'
         this.id=0
     }
  
@@ -38,28 +38,29 @@ class Products {
         }
     }
 
-    async saveProduct(data){
-        //id, timestamp, nombre, descripcion, código, foto (url), precio, stock.
-        const dataFs = await fs.readFile(this.ruta,'utf-8')
-        this.id++;
-        if (dataFs) {
-            const dataProductos = JSON.parse(dataFs)
-            nuevoId = (dataProductos[(dataProductos.length)-1].id)+1
+    async saveProduct(data){   
+        try{
+            //id, timestamp, nombre, descripcion, código, foto (url), precio, stock.
+            const allProducts= await this.getProducts();
+            console.log(this.id)
+            this.id++;
+            const newProduct = {
+                id: this.id,
+                timestamp: moment().format('L LTS'),
+                nombre : data.nombre,
+                descripcion: data.descripcion,
+                codigo: data.codigo,
+                foto: data.foto,
+                precio : data.precio,
+                stock: data.stock
+            }
+            console.log(this.id)
+            allProducts.push(newProduct)
+            console.log(allProducts)
+            await fs.writeFile(this.route,JSON.stringify(allProducts, null, 2))
+        }catch(error){
+            console.log("Error guardando un producto " + error)
         }
-        const newProduct = {
-            id: this.id,
-            timestamp: moment().format('L LTS'),
-            nombre : data.nombre,
-            descripcion: data.descripcion,
-            codigo: data.codigo,
-            foto: data.foto,
-            precio : data.precio,
-            stock: data.stock
-        }
-        this.products.push(newProduct)
-        console.log(this.productos)
-        await fs.writeFile(this.ruta,JSON.stringify(this.products, null, 2))
-        return newProduct
     }
 
     async updateProduct(id, product) {
@@ -79,7 +80,7 @@ class Products {
                 }
                 const findIndex = allProducts.findIndex((prod) => prod.id === parseInt(id))
                 allProducts[findIndex] = updProduct
-                await fs.writeFile(this.filePath, JSON.stringify(allProducts, null, 2));
+                await fs.writeFile(this.route, JSON.stringify(allProducts, null, 2));
                 return updProduct
             } else {
                 console.log(`No se encontro el producto con id: ${id}`);
