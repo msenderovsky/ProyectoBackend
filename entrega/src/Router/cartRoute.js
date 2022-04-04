@@ -4,13 +4,13 @@ const cartRoute = express.Router()
 const Products= require ('../api/products')
 const storeProducts = new Products()
 
-const Carts= require('./api/cart')
-const storeCarts= Carts()
+const Carts= require('../api/cart')
+const storeCarts= new Carts()
 
 cartRoute.get('/:id/products', async (req, res) => {
     try {
         const productsInCartById = await storeCarts.listCartProducts(req.params.id)
-        res.json(productsInCartById)
+        res.status(200).json(productsInCartById)
     }catch (error) {
         res.status(500).json({error: error.message})
     }
@@ -19,7 +19,7 @@ cartRoute.get('/:id/products', async (req, res) => {
 cartRoute.post('/', async (req,res)=> {
     try {
         const newCart = await storeCarts.createCart() 
-        res.json(newCart)
+        res.status(200).json(newCart)
     }catch (error) {
         res.status(500).json({error: error.message})
     }
@@ -35,7 +35,7 @@ cartRoute.post('/:id/products', async (req,res)=> {
     }
 })
 
-cartRoute.delete('/:id', (req,res)=> {
+cartRoute.delete('/:id', async (req,res)=> {
     try{
         const deletedCart= await storeCarts.deleteCart(req.params.id)
         res.status(200).json(deletedCart)
@@ -44,7 +44,7 @@ cartRoute.delete('/:id', (req,res)=> {
     }
 })
 
-cartRoute.delete('/:idcart/products/:idprod', (req,res)=> {
+cartRoute.delete('/:idcart/products/:idprod', async (req,res)=> {
     try{
         const deletedProduct= await storeCarts.deleteCartProduct(req.params.idcart, req.params.idprod)
         res.status(200).json(deletedProduct)
@@ -53,4 +53,4 @@ cartRoute.delete('/:idcart/products/:idprod', (req,res)=> {
     }
 })
  
-modules.exports = cartRoute
+module.exports = cartRoute
