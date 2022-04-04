@@ -3,29 +3,51 @@ const fs = require('fs').promises
  
 class Products {
     constructor(){
-        this.productos = [],
-        this.ruta = './src/db/productos.json'
+        this.products = [],
+        this.route = './db/productos.txt'
+        this.id=0
     }
  
-    getProducts(){
-        return this.productos
+    async getProducts(){
+        try{
+            const productsList = await fs.readFile(this.route)
+            if(productsList.toString() != ''){
+                this.products = JSON.parse(productsList)
+                if(this.products.length > 0){
+                    this.id = parseInt(this.products[this.products.length -1].id) +1
+                }else {
+                    this.id = 1
+                }
+            }
+            return this.products
+        }catch(error){
+            if( error.code == "ENOENT"){
+                fs.writeFile(this.route,'')
+                return []
+            }
+            console.log("Error obteniendo todos los productos " + error)
+        }
     }
 
-    getProduct(id){
-        const producto = this.productos.find(prod => prod.id == id)
-        return producto
+    async getProduct(productID){
+        try {
+            const allProducts = await this.getProducts()
+            return allProducts.find(prod => prod.id == parseInt(productID))
+        }catch(error){
+            console.log("Error obteniendo un producto" + error)
+        }
     }
 
     async saveProduct(data){
         //id, timestamp, nombre, descripcion, código, foto (url), precio, stock.
         const dataFs = await fs.readFile(this.ruta,'utf-8')
-        let nuevoId = 1 ;
+        this.id++;
         if (dataFs) {
             const dataProductos = JSON.parse(dataFs)
             nuevoId = (dataProductos[(dataProductos.length)-1].id)+1
         }
         const newProduct = {
-            id: nuevoId,
+            id: this.id,
             timestamp: moment().format('L LTS'),
             nombre : data.nombre,
             descripcion: data.descripcion,
@@ -34,19 +56,19 @@ class Products {
             precio : data.precio,
             stock: data.stock
         }
-        this.productos.push(newProduct)
+        this.products.push(newProduct)
         console.log(this.productos)
-        await fs.writeFile(this.ruta,JSON.stringify(this.productos, null, 2))
+        await fs.writeFile(this.ruta,JSON.stringify(this.products, null, 2))
         return newProduct
     }
 
     async updateProduct(id, product) {
         try {
-            const arr= await this.getAll();
-            const productById = arr.find((prod) => prod.id === parseInt(id));
+            const allProducts= await this.getProducts();
+            const productById = allProducts.find((prod) => prod.id === parseInt(id));
             if (productById) {
                 const updProduct = {
-                    id: id, 
+                    id: parseInt(id), 
                     timestamp: moment().format('L LTS'),
                     nombre: product.nombre,
                     descripcion: product.descripcion,
@@ -55,17 +77,31 @@ class Products {
                     precio: product.precio,
                     stock: product.stock
                 }
-                const findIndex = arr.findIndex((prod) => prod.id === parseInt(id))
-                arr[findIndex] = updProduct
-                await fs.writeFile(this.filePath, JSON.stringify(ar, null, 2));
+                const findIndex = allProducts.findIndex((prod) => prod.id === parseInt(id))
+                allProducts[findIndex] = updProduct
+                await fs.writeFile(this.filePath, JSON.stringify(allProducts, null, 2));
                 return updProduct
             } else {
                 console.log(`No se encontro el producto con id: ${id}`);
             }
         } catch (error) {
-            console.log("Error " + error);
+            console.log("Error actualizando" + error);
         }
     }
+
+    async deleteByID(id){
+        try{
+            const allProducts= await this.getProducts()
+            const deleteIndex= allProducts.findIndex((product) => product.id === parseInt(id))
+            if (deleteIndex != -1){
+                allProducts.splice(deleteIndex,1)
+                await fs.writeFile(this.route, JSON.stringify(allProducts,null,2))
+            }
+        }catch(error){
+            console.log(`Error borrando por id: ${error.message}`)
+        }
+    }
+
 }
  
 module.exports = Products
