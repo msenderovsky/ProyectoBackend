@@ -93,7 +93,7 @@ class cart{
 
     async addCartProduct(cartID, product) {
         try {
-            const allCarts = await this.getAllCart()
+            const allCarts = await this.getAllCarts()
             const cartById = allCarts.find(cart => cart.id == parseInt(cartID))
             if (cartById) {
                 cartById.products.push(product)

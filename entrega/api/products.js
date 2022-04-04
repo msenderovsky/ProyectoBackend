@@ -42,8 +42,6 @@ class Products {
         try{
             //id, timestamp, nombre, descripcion, código, foto (url), precio, stock.
             const allProducts= await this.getProducts();
-            console.log(this.id)
-            this.id++;
             const newProduct = {
                 id: this.id,
                 timestamp: moment().format('L LTS'),
@@ -54,10 +52,8 @@ class Products {
                 precio : data.precio,
                 stock: data.stock
             }
-            console.log(this.id)
-            allProducts.push(newProduct)
-            console.log(allProducts)
-            await fs.writeFile(this.route,JSON.stringify(allProducts, null, 2))
+            this.products.push(newProduct)
+            await fs.writeFile(this.route,JSON.stringify(this.products, null, 2))
         }catch(error){
             console.log("Error guardando un producto " + error)
         }

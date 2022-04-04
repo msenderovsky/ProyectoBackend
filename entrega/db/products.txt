@@ -1,10 +1,32 @@
 [
   {
-    "id": 1,
-    "timestamp": "04/04/2022 3:19:40 PM"
+    "id": 25,
+    "timestamp": "04/04/2022 4:00:57 PM",
+    "nombre": "",
+    "descripcion": "",
+    "codigo": "",
+    "foto": "",
+    "precio": "",
+    "stock": ""
   },
   {
-    "id": 3,
-    "timestamp": "04/04/2022 3:34:01 PM"
+    "id": 27,
+    "timestamp": "04/04/2022 4:01:09 PM",
+    "nombre": "234523",
+    "descripcion": "ewtrtg",
+    "codigo": "dfsdf",
+    "foto": "sdff",
+    "precio": "123",
+    "stock": "1444"
+  },
+  {
+    "id": 28,
+    "timestamp": "04/04/2022 4:03:58 PM",
+    "nombre": "234523",
+    "descripcion": "ewtrtg",
+    "codigo": "dfsdf",
+    "foto": "sdff",
+    "precio": "123",
+    "stock": "1444"
   }
 ]
