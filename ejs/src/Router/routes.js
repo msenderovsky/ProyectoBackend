@@ -1,5 +1,6 @@
-const express = require("express")
-const myRoutes= express.Router()
+const {Router} = require("express")
+
+const myRoutes = Router()
 
 myRoutes.get('/',(req,res)=>{
     res.render('index')
