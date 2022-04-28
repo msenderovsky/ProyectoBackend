@@ -1,12 +1,10 @@
-const Cart= require ('../models/cart')
+require('dotenv').config()
+const DAOCart = require('../daos/'+process.env.AMBIENTE+'/CarritosDAO')
 
 class CartController{
-    async addCart (req, res) {
-        const cart= new Cart({
-            date: Date().toString()
-        })
-        const savedCart = await cart.save()
-        res.send(savedCart)
+    async addCart (req, res) {   
+        const savedCart = await cart.addCart()
+        res.status(201).res.send(savedCart)
     }
 
     async addProduct(req, res){
@@ -20,16 +18,19 @@ class CartController{
         }
     }
 
-    async getCarts(req,res){
-        const cart= await Cart.find().populate('products')
+    async addCartProduct(req, res){
+        const cart = await DAOCart.addCartProduct(req.params.id, req.params.idCarrito)
         res.send(cart)
     }
 
+    async getCarts(req,res){
+        const carts= await DAOCart.getCarts()
+        res.send(carts)
+    }
+
     async deleteCartProduct(req, res){
-        try{
-            const cart= await Cart.findOne({_id: req.params.cartID})
-            cart.products= cart.products.filter(prod => prod != req.params.id)
-            await cart.save()
+        try{  
+            const cart = await DAOCart.deleteCartProduct(req.params.cartID, req.params.id)
             res.send(cart)
         } catch (error) {
             console.log("Error agregando un producto al carro" + error);
@@ -38,8 +39,7 @@ class CartController{
 
     async deleteCart(req, res){
         try{
-            const id= req.params.id
-            const toDelete = await Cart.deleteOne({_id: id})
+            const toDelete = await Cart.deleteCart(req.params.id)
             res.send(toDelete)
         }catch(error){
             console.log(`Error borrando por id: ${error.message}`)
