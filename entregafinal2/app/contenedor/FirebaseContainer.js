@@ -2,38 +2,35 @@ const {admin, serviceAccount} = require('../config/config')
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: 'https://ecommerce-dde6f.firebaseio.com'
+    databaseURL: 'https://ecommerce-27e4b.firebaseio.com'
 })
 const db = admin.firestore()
 
 module.exports = class FirebaseContainer{
     constructor(){
+        this.dbf = db
     }
 
     async save(data, collection) {
         const query = db.collection(collection)
         const doc = query.doc()
-        const element = await doc.create(data)
-        return element
+        const elemento = await doc.create(data)
+        return elemento
     }
 
     async list(collection){
         const query = db.collection(collection)
         const query2 = await query.get()
         let docs = query2.docs
-        
-        const res = docs.map(doc => ({
-            id: doc.id,
-            title: doc.data().title,
-            price: doc.data().price,
-            url: doc.data().url,
-        }))
-
-        return res
+        return docs
     }
 
-    async listSublist(data, model){
-        
+    async listSublist(collection, model){
+
+        const query = db.collection(collection).doc(model)
+        const query2 = await query.get()
+        let docs = query2.docs
+        return docs
     }
     
     async showElement(collection, id){
@@ -41,7 +38,6 @@ module.exports = class FirebaseContainer{
         const doc = query.doc(id)
         const item = await doc.get()
         const res = item.data()
-        res.id = id
         return res
     }
     

@@ -5,32 +5,39 @@ class DAOCart extends FirebaseContainer{
         super()
     }
 
-    async addCart(data){
-        const cart = await super.save(data, 'carts')
+    async addCart(){
+        const data = {
+            fecha: Date().toString()
+        }
+        const cart = await this.dbf.collection('carts').add(data)
         return cart
     }
 
-    async listCarts(){
-        const carts = await super.list('carts')
-        return carts
+    async getCarts(){
+        let docs = await super.list('carts')
+        const res = docs.map(doc => ({
+            id: doc.id,
+            fecha: doc.data().fecha,
+            products: doc.data().products
+        }))
+        return res
     }
 
-    async deleteCart(id){
-        const cart = await super.delete('carts', id)
+    async addCartProduct(productID, cartID){
+        const product = await super.showElement('products', productID)
+        //const messageRef = db.collection('rooms').doc('roomA').collection('messages').doc('message1');
+        const cart = await this.dbf.collection('carts').doc(cartID).collection('products').doc(productID).set(product)
         return cart
     }
 
     async deleteCartProduct(cartID, productID){
-        const cart= await super.showElement('carts', cartID)
-        cart.products = cart.products.filter(prod=> prod!= productID)
-        await super.update('carts', cart, cartID)
+        const cart = await this.dbf.collection('carts').doc(cartID).collection('products').doc(productID).delete()
         return cart
     }
 
-    async addCartProduct(productID, cartID){
-        const cart= await super.showElement('carts', cartID)
-        cart.products.push(productID)
-        await super.update('carts', cart, cartID)
+
+    async deleteCart(id){
+        const cart = await super.delete('carts', id)
         return cart
     }
 
