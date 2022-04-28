@@ -1,3 +1,7 @@
+const mongoose= require ('mongoose')
+const urlBase=process.env.DB
+mongoose.connect(urlBase)
+
 module.exports = class MongoDBContainer{
     constructor(){
 

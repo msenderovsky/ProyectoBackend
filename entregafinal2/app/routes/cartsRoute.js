@@ -1,7 +1,5 @@
-const CartController= require ('../controllers/cart')
+const CartController= require ('../controllers/carts')
 const {Router} = require ('express')
-
-const Cart = require('../models/cart')
 
 const route= Router()
 
@@ -12,4 +10,4 @@ route.post('/:cartID/product/:id', CartController.addProduct)
 route.delete('/:cartID/product/:id', CartController.deleteCartProduct)
 route.delete('/:id', CartController.deleteCart)
 
-module.exports= new route
+module.exports= route

@@ -1,10 +1,10 @@
 const express= require ('express')
 const app=express()
-const productsRoute = require('./routers/productsRoute')
-const cartsRoute = require('./routers/cartsRoute')
+const productsRoute = require('./routes/productsRoute')
+const cartsRoute = require('./routes/cartsRoute')
 
 app.use(express.json())
-app.use('./api/productos', productsRoute)
-app.use('./api/carritos', cartsRoute)
+app.use('./api/products', productsRoute)
+app.use('./api/carts', cartsRoute)
 
 module.exports= app 

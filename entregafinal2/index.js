@@ -1,8 +1,8 @@
-const mongoose= require ('mongoose')
+//const mongoose= require ('mongoose')
 const app= require ('./app/app')
 const PORT=process.env.PORT
-const urlBase=process.env.DB
+//const urlBase=process.env.DB
 
-mongoose.connect(urlBase)
+//mongoose.connect(urlBase)
 
-app.listen(PORT, ()=> console.log(`http://localhost:${PORT}`)) 
+app.listen(PORT, ()=> console.log(`http://localhost:${PORT}`))

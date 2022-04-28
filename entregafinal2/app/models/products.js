@@ -9,5 +9,5 @@ const prodSchema= new mongoose.Schema({
 })
 
 //se crea un modelo en la coleccion partiendo del esquema
-module.exports= mongoose.model('products', schema)
+module.exports= mongoose.model('products', prodSchema)
 

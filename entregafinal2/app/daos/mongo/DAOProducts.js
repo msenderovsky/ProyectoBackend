@@ -18,7 +18,7 @@ class DAOProducts extends MongoDBContainer{
     }
 
     async listProducts(){
-        const products = await super.list()
+        const products = await super.list(Product)
         return products
     }
 
