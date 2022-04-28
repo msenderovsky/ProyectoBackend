@@ -37,5 +37,3 @@ module.exports = class MongoDBContainer{
         }
     }
 }
-
-module.exports = new MongoDBContainer()
