@@ -2,7 +2,7 @@ const express = require('express');
 const { get } = require('express/lib/response');
 const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
-
+const generateRandomProduct= require('./src/DB/fakerContainer')
 const Container = require("./src/contenedor");
 const { optionsMySQL } = require("./src/DB/optionsMySQL");
 const { optionsSQLite } = require("./src/DB/optionsSQLite");
@@ -18,9 +18,10 @@ const io = new IOServer(httpServer);
 const apiProducts = new Container(optionsMySQL, tableProducts);
 const apiMessages = new Container(optionsSQLite, tableMessages);
 
+const prodList=generateRandomProduct(5)
 
 app.get('/', (req, res) => {res.render('index');})
-
+app.get('/api/productos-test', (req, res) => { res.status(200).json(listProd)})
 
 /* WEBSOCKET */
 io.on("connection", async (socket) => {
