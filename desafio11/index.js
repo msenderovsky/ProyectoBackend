@@ -3,42 +3,18 @@ import session from 'express-session'
 import MongoStore from 'connect-mongo'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
-import path from 'path'
 import passport from 'passport'
-import {Strategy} from 'passport-local'
 import mongoose from 'mongoose'
-import 'dotenv/config'
+import {Strategy} from 'passport-local'
 import routes from './src/routes/routes.js'
+import 'dotenv/config'
+import { LoginStrategy, Registertrategy } from './src/middlewares/localPassport.js'
 
-const LocalStrategy= Strategy;
 const app= express()
 const PORT= process.env.PORT
 
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        const user= usuariosDB.find(user => user.name== user)
-        if (!user){
-            console.log('Usuario no existe')
-            return done(null,false)
-        } else{
-            if (user.password != password){
-                console.log('Credenciales incorrectas')
-                return done(null,false)
-            }else{
-                return done(null, user)
-            }
-        }
-    }
-  ));
-
-passport.serializeUser((user,done)=>{
-    done(null,user.name)
-})
-
-passport.deserializeUser((name,done)=>{
-    const user= usuariosDB.find(user => user.name== name)
-    done(null,user)
-})
+passport.use('login', LoginStrategy);
+passport.use('register', Registertrategy)
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())

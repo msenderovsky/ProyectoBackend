@@ -52,12 +52,14 @@ routes.get('/logout', (req,res)=>{
 
 routes.post('/login', passport.authenticate('login', {successRedirect: '/ecommerce/datos', failureRedirect: '/ecommerce/login-error'}))
 
+routes.post('/register', passport.authenticate('register', {failureRedirect: '/ecommerce/register-error', successRedirect: '/ecommerce/login'}))
+
 routes.get('/register', (req,res) => {
     if (req.isAuthenticated()) return res.redirect('/ecommerce')
     res.render('register')
 })
 
-routes.post('/register', (req,res) => {
+/*routes.post('/register', (req,res) => {
     const {username, password, address} = req.body
     const user= usuariosDB.find(user => user.name == name)
     if (user){
@@ -67,7 +69,7 @@ routes.post('/register', (req,res) => {
         console.log(usuariosDB)
         res.redirect('/login')
     }
-})
+})*/
 
 
 export default routes
