@@ -4,17 +4,50 @@ import MongoStore from 'connect-mongo'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import path from 'path'
+import passport from 'passport'
+import {Strategy} from 'passport-local'
+import mongoose from 'mongoose'
 import 'dotenv/config'
+import routes from './src/routes/routes.js'
 
+const LocalStrategy= Strategy;
 const app= express()
+const PORT= process.env.PORT
+
+passport.use(new LocalStrategy(
+    function(username, password, done) {
+        const user= usuariosDB.find(user => user.name== user)
+        if (!user){
+            console.log('Usuario no existe')
+            return done(null,false)
+        } else{
+            if (user.password != password){
+                console.log('Credenciales incorrectas')
+                return done(null,false)
+            }else{
+                return done(null, user)
+            }
+        }
+    }
+  ));
+
+passport.serializeUser((user,done)=>{
+    done(null,user.name)
+})
+
+passport.deserializeUser((name,done)=>{
+    const user= usuariosDB.find(user => user.name== name)
+    done(null,user)
+})
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(express.static('public'))
 app.set('view engine', 'ejs')
-app.set('views', './public/views')
+app.set('views', './src/views')
 
 app.use(bodyParser.urlencoded({extended:true}))
+app.use(cookieParser())
 
 app.use(session({
     store: MongoStore.create({
@@ -24,80 +57,20 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        maxAge: 60000
+        httpOnly:false,
+        secure:false,
+        maxAge: Number(process.env.TIME_SESSION_SENCONDS)*1000
     }
 }))
 
-app.get('/products', (req,res) => {
-    if (true){
-        res.render('products')
-    }else{
-        res.redirect('login')
-    }
-    res.render ('products')
-})
+app.use(passport.initialize())
+app.use(passport.session())
 
-app.get('/login', (req,res) => {
-    res.redirect ('login')
-})
+app.use('/ecommerce', routes)
 
-app.get('/login-error', (req,res) => {
-    res.render ('login-error')
-})
+mongoose.connect(process.env.MONGO);
 
-app.get('/datos', (req,res)=>{
-    if (req.session.name){
-        req.session.counter++
-        const user= userDB.find(user => user.name== req.session.name)
-        res.render('datos', {datos:user, counter: req.session.counter})
-    } else {
-        res.redirect('/login')
-    }
-})
-
-app.get('/logout', (req,res)=>{
-    req.session.destroy(err=>{res.redirect('/')})
-    res.render('logout', {
-        username
-    })
-})
-
-app.post('/login', (req,res) => {
-    const {username, password} = req.body
-    const user= userDB.find(user => user.name== name)
-    if (!user){
-        console.log('Usuario no existe')
-        res.redirect('/login-error')
-    } else{
-        if (user.password != password){
-            console.log('Credenciales incorrectas')
-            res.redirect('login-error')
-        }else{
-            req.session.name=name;
-            req.session.counter=0;
-            res.redirect('/datos')
-        }
-    }
-})
-
-app.get('/register', (req,res) => {
-    res.render('register')
-})
-
-app.post('/register', (req,res) => {
-    const {username, password, address} = req.body
-    const user= userDB.find(user => user.name == name)
-    if (user){
-        res.render('register-error')
-    }else{
-        userDB.push({username, password, address})
-        console.log(userDB)
-        res.redirect('/login')
-    }
-})
-
-
-app.listen(8080, ()=> {
-    console.log(`Server on http://localhost:8080`)
+app.listen(PORT, ()=> {
+    console.log(`http://localhost:${PORT}/ecommerce/`)
     
 });
