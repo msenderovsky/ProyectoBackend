@@ -17,7 +17,7 @@ routes.get('/', (req,res)=>{
 })*/
 
 routes.get('/login', (req,res) => {
-    if (req.isAuthenticated()) return res.redirect('/ecommerce')
+    if (req.isAuthenticated()) return res.redirect('/ecommerce/datos')
     res.render ('login')
 })
 
@@ -40,7 +40,7 @@ routes.get('/datos', (req,res)=>{
         req.user.counter++
     }
     const userData={
-        name: req.user.name,
+        username: req.user.username,
         address: req.user.address
     }
     res.render('datos', {datos:userData, counter: req.user.counter})
@@ -54,7 +54,7 @@ routes.get('/logout', (req,res)=>{
 
 routes.post('/login', passport.authenticate('login', {successRedirect: '/ecommerce/datos', failureRedirect: '/ecommerce/login-error'}))
 
-routes.post('/register', passport.authenticate('register', {successRedirect: '/ecommerce/login', failureRedirect: '/ecommerce/register-error'}))
+routes.post('/register', passport.authenticate('signup', {successRedirect: '/ecommerce/login', failureRedirect: '/ecommerce/register-error'}))
 
 routes.get('/register', (req,res) => {
     if (req.isAuthenticated()) return res.redirect('/ecommerce')

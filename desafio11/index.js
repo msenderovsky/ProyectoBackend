@@ -7,13 +7,13 @@ import passport from 'passport'
 import mongoose from 'mongoose'
 import routes from './src/routes/routes.js'
 import 'dotenv/config'
-import { LoginStrategy, RegisterStrategy } from './src/middlewares/localPassport.js'
+import { LoginStrategy, SignUpStrategy } from './src/middlewares/localPassport.js'
 
 const app= express()
 const PORT= process.env.PORT
 
 passport.use('login', LoginStrategy);
-passport.use('register', RegisterStrategy)
+passport.use('signup', SignUpStrategy)
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
