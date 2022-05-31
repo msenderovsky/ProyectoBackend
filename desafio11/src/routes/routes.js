@@ -25,6 +25,10 @@ routes.get('/login-error', (req,res) => {
     res.render ('login-error')
 })
 
+routes.get('/register-error', (req,res) => {
+    res.render ('register-error')
+})
+
 routes.get('/datos', (req,res)=>{
 
     console.log('datos req.user: ', req.user)
@@ -45,14 +49,12 @@ routes.get('/datos', (req,res)=>{
 
 routes.get('/logout', (req,res)=>{
     req.session.destroy(err=>{res.redirect('/')})
-    res.render('logout', {
-        username
-    })
+    res.render('logout', {username})
 })
 
 routes.post('/login', passport.authenticate('login', {successRedirect: '/ecommerce/datos', failureRedirect: '/ecommerce/login-error'}))
 
-routes.post('/register', passport.authenticate('register', {failureRedirect: '/ecommerce/register-error', successRedirect: '/ecommerce/login'}))
+routes.post('/register', passport.authenticate('register', {successRedirect: '/ecommerce/login', failureRedirect: '/ecommerce/register-error'}))
 
 routes.get('/register', (req,res) => {
     if (req.isAuthenticated()) return res.redirect('/ecommerce')

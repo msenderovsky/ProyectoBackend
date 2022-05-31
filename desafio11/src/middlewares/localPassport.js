@@ -29,7 +29,7 @@ export const LoginStrategy =new Strategy(
     }
 );
 
-export const Registertrategy= new Strategy({
+export const RegisterStrategy= new Strategy({
     passReqToCallback: true
 },
     (req, username, password, done) => {
@@ -44,9 +44,9 @@ export const Registertrategy= new Strategy({
                 password: createHash(password),
             }
 
-            User.create(newUser, (err, userWithId) => {
+            User.create(newUser, (err, IDUser) => {
                 if (err) return done(err);
-                return done(null, userWithId);
+                return done(null, IDUser);
             });
         });
     }

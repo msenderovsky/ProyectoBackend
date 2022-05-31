@@ -5,16 +5,15 @@ import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import passport from 'passport'
 import mongoose from 'mongoose'
-import {Strategy} from 'passport-local'
 import routes from './src/routes/routes.js'
 import 'dotenv/config'
-import { LoginStrategy, Registertrategy } from './src/middlewares/localPassport.js'
+import { LoginStrategy, RegisterStrategy } from './src/middlewares/localPassport.js'
 
 const app= express()
 const PORT= process.env.PORT
 
 passport.use('login', LoginStrategy);
-passport.use('register', Registertrategy)
+passport.use('register', RegisterStrategy)
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
