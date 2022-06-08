@@ -48,19 +48,27 @@ routes.get('/datos', (req,res)=>{
 })
 
 routes.get('/logout', (req,res)=>{
-    const nombre = req.user.username
-    req.session.destroy(err=>{res.render('logout', {nombre: nombre}) })
+    req.session.destroy(err=>{res.redirect('/')})
+    res.render('logout', {username})
 })
 
 routes.post('/login', passport.authenticate('login', {successRedirect: '/ecommerce/datos', failureRedirect: '/ecommerce/login-error'}))
 
-//routes.post('/register', passport.authenticate('signup', {successRedirect: '/ecommerce/login', failureRedirect: '/ecommerce/register-error'}))
-
-routes.post('/register', passport.authenticate('signup', {failureRedirect: '/ecommerce/register-error'}), (req, res) => res.redirect('/ecommerce/login'))
+routes.post('/register', passport.authenticate('signup', {successRedirect: '/ecommerce/login', failureRedirect: '/ecommerce/register-error'}))
 
 routes.get('/register', (req,res) => {
     if (req.isAuthenticated()) return res.redirect('/ecommerce')
     res.render('register')
+})
+
+rutas.get('/api/random', (req, res) => {
+    let cant = req.query.cant || 1000000;
+    let passCant = ['' + cant + '']
+    const child = fork('./random.js');
+    child.send(passCant);
+    child.on('message', (operation) => {
+    res.send(JSON.stringify(operation));
+  });
 })
 
 /*routes.post('/register', (req,res) => {

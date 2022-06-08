@@ -1,11 +1,14 @@
 import express from 'express'
 import session from 'express-session'
+import MongoStore from 'connect-mongo'
 import cookieParser from 'cookie-parser'
+import bodyParser from 'body-parser'
 import passport from 'passport'
 import mongoose from 'mongoose'
 import routes from './src/routes/routes.js'
 import 'dotenv/config'
 import { LoginStrategy, SignUpStrategy } from './src/middlewares/localPassport.js'
+//import {PORT} from './src/utils/minimist.js'
 
 const app= express()
 const PORT= process.env.PORT
@@ -19,12 +22,14 @@ app.use(express.static('public'))
 app.set('view engine', 'ejs')
 app.set('views', './src/views')
 
-//app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({extended:true}))
 app.use(cookieParser())
 
 app.use(session({
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGO
+    }),
     secret: String(process.env.SECRET),
-    rolling: true,
     resave: false,
     saveUninitialized: false,
     cookie: {
