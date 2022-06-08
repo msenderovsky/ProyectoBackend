@@ -29,12 +29,8 @@ export const SignUpStrategy= new Strategy({
     passReqToCallback: true
 },
     (req, username, password, done) => {
-        console.log(username)
         const findUser = User.findOne({ username: username }, function (err, user) {
-            if (findUser!=null)
-                console.log("yes")
-            else console.log("no")
-            //console.log(findUser)
+            
             if (err) return done(err)
             if (user) return done(null, false)
 
@@ -44,7 +40,6 @@ export const SignUpStrategy= new Strategy({
                 password: createHash(password),
             }
 
-            console.log("paso el creador de newuser fallo3")
             User.create(newUser, (err, IDUser) => {
                 if (err) return done(err);
                 return done(null, IDUser);
