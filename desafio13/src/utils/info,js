@@ -8,6 +8,6 @@ export const objInfo = {
         reservedMemory: process.memoryUsage().rss,
         executionPath: process.title,
         processID: process.pid,
-        cantidadCpu: CPUamount
+        CPUCount: CPUamount
 
 }
