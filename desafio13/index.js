@@ -8,10 +8,13 @@ import mongoose from 'mongoose'
 import routes from './src/routes/routes.js'
 import 'dotenv/config'
 import { LoginStrategy, SignUpStrategy } from './src/middlewares/localPassport.js'
-import {PORT} from './src/utils/minimist.js'
+import cluster from 'cluster'
+import os from 'os'
+import minimist from 'minimist'
 
 const app= express()
-const PORT= process.env.PORT
+const args = minimist(process.argv.slice(2))
+const PORT = args.puerto || 8080 
 
 passport.use('login', LoginStrategy);
 passport.use('signup', SignUpStrategy)
@@ -50,3 +53,26 @@ app.listen(PORT, ()=> {
     console.log(`http://localhost:${PORT}/ecommerce/`)
     
 });
+
+const CPUAmount = os.cpus().length;
+
+
+const modoServer = args.modo || 'Fork'
+if (modoServer == 'CLUSTER') {
+    if(cluster.isPrimary){
+        console.log(`Master ${process.pid} is running`)
+        for (let i = 0; i < CPUAmount; i++) {
+            cluster.fork();
+        }
+    
+        cluster.on('exit', (worker,code,signal)=>{
+            console.log(`Worker ${worker.process.pid} died`)
+        })
+        
+    } else {
+        app.listen(PORT, () => console.log(`http://localhost:${PORT}/ecommerce/`))
+       console.log(`Worker ${process.pid} started`)
+    }
+} else {
+    app.listen(PORT, () => console.log(`http://localhost:${PORT}/ecommerce/`))
+}

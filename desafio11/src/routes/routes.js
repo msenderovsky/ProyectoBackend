@@ -7,15 +7,6 @@ routes.get('/', (req,res)=>{
     res.send("Welcome")
 })
 
-/*routes.get('/products', (req,res) => {
-    if (){
-        res.render('products')
-    }else{
-        res.redirect('login')
-    }
-    res.render ('products')
-})*/
-
 routes.get('/login', (req,res) => {
     if (req.isAuthenticated()) return res.redirect('/ecommerce/datos')
     res.render ('login')
@@ -54,26 +45,11 @@ routes.get('/logout', (req,res)=>{
 
 routes.post('/login', passport.authenticate('login', {successRedirect: '/ecommerce/datos', failureRedirect: '/ecommerce/login-error'}))
 
-//routes.post('/register', passport.authenticate('signup', {successRedirect: '/ecommerce/login', failureRedirect: '/ecommerce/register-error'}))
-
 routes.post('/register', passport.authenticate('signup', {failureRedirect: '/ecommerce/register-error'}), (req, res) => res.redirect('/ecommerce/login'))
 
 routes.get('/register', (req,res) => {
     if (req.isAuthenticated()) return res.redirect('/ecommerce')
     res.render('register')
 })
-
-/*routes.post('/register', (req,res) => {
-    const {username, password, address} = req.body
-    const user= usuariosDB.find(user => user.name == name)
-    if (user){
-        res.render('register-error')
-    }else{
-        usuariosDB.push({username, password, address})
-        console.log(usuariosDB)
-        res.redirect('/login')
-    }
-})*/
-
 
 export default routes

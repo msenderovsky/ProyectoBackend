@@ -52,7 +52,7 @@ routes.get('/register', (req,res) => {
     res.render('register')
 })
 
-rutas.get('/api/random', (req, res) => {
+routes.get('/api/random', (req, res) => {
     let cant = req.query.cant || 1000000;
     let passCant = ['' + cant + '']
     const child = fork('./random.js');
@@ -60,6 +60,11 @@ rutas.get('/api/random', (req, res) => {
     child.on('message', (operation) => {
     res.send(JSON.stringify(operation));
   });
+})
+
+routes.get('/info', (req,res)=> {
+    //res.render('info', {data : objInfo})
+    res.json(objInfo)
 })
 
 
