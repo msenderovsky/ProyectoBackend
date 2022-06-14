@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import passport from "passport";
+import { fork } from "child_process";
 const routes = Router()
 
 
@@ -53,7 +54,7 @@ routes.get('/register', (req,res) => {
 })
 
 routes.get('/api/random', (req, res) => {
-    let cant = req.query.cant || 1000000;
+    let cant = req.query.cant || 100;
     let passCant = ['' + cant + '']
     const child = fork('./random.js');
     child.send(passCant);
