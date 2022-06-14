@@ -12,16 +12,18 @@ import cluster from 'cluster'
 import os from 'os'
 import minimist from 'minimist'
 
+const CPUAmount = os.cpus().length;
 const app= express()
 const args = minimist(process.argv.slice(2))
-const PORT = args.puerto || 8080 
+const serverMode = args.modo || 'Fork'
+const PORT = args.puerto || 8080
 
 passport.use('login', LoginStrategy);
 passport.use('signup', SignUpStrategy)
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
-app.use(express.static('public'))
+//app.use(express.static('public'))
 app.set('view engine', 'ejs')
 app.set('views', './src/views')
 
@@ -49,16 +51,13 @@ app.use('/ecommerce', routes)
 
 mongoose.connect(process.env.MONGO);
 
-app.listen(PORT, ()=> {
+/*app.listen(PORT, ()=> {
     console.log(`http://localhost:${PORT}/ecommerce/`)
     
-});
-
-const CPUAmount = os.cpus().length;
+});*/
 
 
-const modoServer = args.modo || 'Fork'
-if (modoServer == 'CLUSTER') {
+if (serverMode == 'CLUSTER') {
     if(cluster.isPrimary){
         console.log(`Master ${process.pid} is running`)
         for (let i = 0; i < CPUAmount; i++) {
@@ -68,7 +67,6 @@ if (modoServer == 'CLUSTER') {
         cluster.on('exit', (worker,code,signal)=>{
             console.log(`Worker ${worker.process.pid} died`)
         })
-        
     } else {
         app.listen(PORT, () => console.log(`http://localhost:${PORT}/ecommerce/`))
        console.log(`Worker ${process.pid} started`)
