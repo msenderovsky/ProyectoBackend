@@ -1,7 +1,8 @@
 import { Router } from 'express'
 import passport from "passport";
 import { fork } from "child_process";
-import {logger, myLoggerError} from '../utils/logs.js'
+import {logger, myLoggerError} from '../utils/logger.js'
+import os from 'os'
 
 const routes = Router()
 
@@ -65,7 +66,7 @@ routes.get('/api/random', (req, res) => {
   });
 })
 
-rutas.get('/info', (req, res) => {
+routes.get('/info', (req, res) => {
 
     try {
         logger.info('un info log')

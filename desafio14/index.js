@@ -12,7 +12,7 @@ import cluster from 'cluster'
 import os from 'os'
 import minimist from 'minimist'
 import compression from 'compression'
-import { logger, myLoggerWarn, myLoggerError } from './src/middlewares/logger.js'
+import { logger, myLoggerWarn, myLoggerError } from './src/utils/logger.js'
 
 const CPUAmount = os.cpus().length;
 const app= express()
