@@ -12,8 +12,7 @@ import cluster from 'cluster'
 import os from 'os'
 import minimist from 'minimist'
 import compression from 'compression'
-//import { myLoggerWarn, myLoggerInfo } from './src/middlewares/logger.js'
-import {logger} from './src/utils/logs.js'
+import { logger, myLoggerWarn, myLoggerError } from './src/middlewares/logger.js'
 
 const CPUAmount = os.cpus().length;
 const app= express()
@@ -58,13 +57,11 @@ app.use('/ecommerce', routes)
 
 mongoose.connect(process.env.MONGO);
 
-/*const logger= winston.createLogger({
-    level:"warn",
-    transports:[
-        new winston.transports.Console({ level: "verbose"}),
-        new winston.transports.File({ filename: "errores.log", level: "error"})
-    ]
-})*/
+app.use((req, res) => {
+    logger.warn('La ruta no existe')
+    myLoggerWarn.warn('La ruta que quiere accede no existe')
+    res.send('La ruta no existe')
+})
 
 app.get("*", (req,res)=>{
     res.send("page not found")
@@ -85,8 +82,11 @@ if (serverMode == 'CLUSTER') {
        console.log(`Worker ${process.pid} started`)
     }
 } else {
-    app.listen(PORT, (err) => {
-        if (err) logError.error("hay un error")
-        console.log(`http://localhost:${PORT}/ecommerce/`)
-    })
+    logger.info('modo FORK.')
+    app
+        .listen(PORT, () => logger.info(`http://localhost:${PORT}/ecommerce/`))
+        .on('error', err => () => {
+            logger.error(err)
+            myLoggerError.error(err)
+        })
 }

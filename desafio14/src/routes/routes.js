@@ -1,8 +1,7 @@
 import { Router } from 'express'
 import passport from "passport";
 import { fork } from "child_process";
-//import { myLoggerWarn } from '../middlewares/logger.js';
-import {logger} from '../utils/logs.js'
+import {logger, myLoggerError} from '../utils/logs.js'
 
 const routes = Router()
 
@@ -66,13 +65,25 @@ routes.get('/api/random', (req, res) => {
   });
 })
 
-routes.get('/info', (req,res)=> {
-    logger.info('logger de info')
-    
-    res.json({})
+rutas.get('/info', (req, res) => {
+
+    try {
+        logger.info('un info log')
+        const dataProcess = {
+            arguments : process.argv,
+            directory : process.cwd(),
+            so: process.platform,
+            nodeVersion: process.version,
+            totalMemory: process.memoryUsage().rss,
+            processId : process.pid,
+            cantidadDeCPUs: os.cpus().length,
+        }
+        res.json(dataProcess)
+    } catch (error) {
+        logger.error('Se produjo un error:' + error.message)
+        myLoggerError.error('Se produjo un error:' + error.message)
+        res.send("Error")
+    }
 })
-
-//routes.get('*', myLoggerWarn)
-
 
 export default routes
