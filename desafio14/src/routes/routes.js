@@ -1,6 +1,9 @@
 import { Router } from 'express'
 import passport from "passport";
 import { fork } from "child_process";
+//import { myLoggerWarn } from '../middlewares/logger.js';
+import {logger} from '../utils/logs.js'
+
 const routes = Router()
 
 
@@ -64,9 +67,12 @@ routes.get('/api/random', (req, res) => {
 })
 
 routes.get('/info', (req,res)=> {
-    //res.render('info', {data : objInfo})
-    //res.json(objInfo)
+    logger.info('logger de info')
+    
+    res.json({})
 })
+
+//routes.get('*', myLoggerWarn)
 
 
 export default routes
