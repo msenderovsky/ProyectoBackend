@@ -50,6 +50,10 @@ app.use(session({
     }
 }))
 
+app.get("/mensaje", (req,res)=>{
+    res.send("hola heroku")
+})
+
 app.use(passport.initialize())
 app.use(passport.session())
 
