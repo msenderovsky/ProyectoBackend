@@ -1,7 +1,7 @@
 const {createTransport} = require('nodemailer')
-const   sendMail = async () =>  {
-    const TEST_MAIL = 'msenderovsky@gmail.com'
-    //process.env.MIMAIL2
+const usersSchema = require('../models/users')
+const sendMail = async () =>  {
+    const TEST_MAIL = process.env.MIMAIL2
     const transporter = createTransport({
         service: 'gmail',
         port: 587,
@@ -13,8 +13,8 @@ const   sendMail = async () =>  {
     
     const mailOptions = {
         from : TEST_MAIL,
-        to: 'marcos_senderovsky@hotmail.com', //process.env.MIMAIL
-        subject: 'Mail de prueba Node.js',
+        to: process.env.MIMAIL,
+        subject: 'Nuevo pedido de ',
         html: '<h1>Hola Mundo con adjunto</h1>',
         attachments: [
          {
@@ -23,9 +23,8 @@ const   sendMail = async () =>  {
         ]
     }
     
-        const  info = await transporter.sendMail(mailOptions)
+        const info = await transporter.sendMail(mailOptions)
         console.log(info)
-   
 }
 
 module.exports = sendMail

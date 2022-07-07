@@ -1,4 +1,5 @@
 const FileContainer = require('../../container/FileContainer')
+import {myLoggerError } from '../../utils/logger.js'
 
 class DAOProducts extends FileContainer{
     constructor(){
@@ -9,8 +10,8 @@ class DAOProducts extends FileContainer{
         try{
             const list = await super.read()
             return list
-        }catch(e){
-            throw new Error(e.message)
+        }catch(error){
+            myLoggerError.error("Error in listProducts " + error)
         }
     }
 
@@ -18,8 +19,8 @@ class DAOProducts extends FileContainer{
         try{
             await super.save(data)
             return data
-        } catch(e){
-            throw new Error(e.message)
+        }catch(error){
+            myLoggerError.error("Error in saveProduct " + error)
         }
     }
 }

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const app = require('./app/app')
-const sendMail = require('./app/config/nodemailer');
-const sendSMS = require('./app/config/twilioSms');
+const app = require('./src/app')
+const sendMail = require('./src/config/nodemailer');
+const sendSMS = require('./src/config/twilioSms');
 const session = require('express-session')
 require('dotenv').config()
 
