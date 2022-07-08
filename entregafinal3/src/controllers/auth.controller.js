@@ -48,12 +48,25 @@ class AuthController {
                     datos,
                     token
                 })
+                res.render('products')
             } else {
                 res.send('Reescriba sus datos ')
             }
                 
         }else {
             res.send('Los campos no coinciden')
+        }
+    }
+
+    async products (req, res) {
+        try { 
+            logger.info('Se accedió a productos')
+            res.render('products', {
+                user: req.user
+            })
+        } catch (error) {
+            logger.error('Error en productos: ' + error)
+            res.send('Error')
         }
     }
 }
