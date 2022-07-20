@@ -37,4 +37,4 @@ cartRoute.delete('/:idCarrito/producto/:id', cartController.deleteCartProduct)
 cartRoute.delete('/:id', cartController.deleteCart)
 
 
-module.exports = route
+module.exports = cartRoute
