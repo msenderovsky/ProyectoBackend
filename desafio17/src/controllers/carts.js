@@ -71,4 +71,4 @@ class cartController{
 
 }
 
-module.exports = new cartController()
+module.exports = cartController

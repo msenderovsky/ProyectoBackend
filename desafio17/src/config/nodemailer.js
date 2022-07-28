@@ -1,9 +1,8 @@
 const {createTransport} = require('nodemailer')
-const TEST_MAIL = process.env.MIMAIL2
 const TO_MAIL = process.env.MIMAIL
 const password = process.env.PASS
 
-const sendMail = async () =>  {
+const sendMail = async (TEST_MAIL, productsString) =>  {
     const transporter = createTransport({
         service: 'gmail',
         port: 587,
@@ -17,9 +16,9 @@ const sendMail = async () =>  {
         from : TEST_MAIL,
         to: TO_MAIL,
         subject: 'Nuevo pedido de ',
-        html: `Hola ${user.name},
+        html: `Hola ,
         'Gracias por su compra, a continuación un resumen de su pedido'
-        '${cart.products}'
+        '${productsString}'
 
         'Saludos'`
     }

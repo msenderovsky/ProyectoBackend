@@ -70,4 +70,4 @@ class productsController{
     }
 }
 
-module.exports = new productsController()
+module.exports = productsController

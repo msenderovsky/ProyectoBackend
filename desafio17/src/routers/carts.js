@@ -16,10 +16,10 @@ cartRouter.get('./carts/compra/:id/', async(req,res)=>{
         const cart= await cart.findByID(req.params.id)
         const products= await prod.find({ _id:{$in: cart.products}})
         const total= products.reduce((total, product) => total+product.price, 0)
-        const message= `Hola ${user.username}, tu compra fue realizada exitosamente`
+        //onst message= `Hola ${user.username}, tu compra fue realizada exitosamente`
 
-        mail.sendMail(TEST_MAIL, message)
-        sms.sendSMS(TEST_MAIL, message)
+        mail.sendMail(TEST_MAIL, JSON.stringify(cart.products))
+        sms.sendSMS(TEST_MAIL, JSON.stringify(cart.products))
         //const user= await userController.
 
         res.json({

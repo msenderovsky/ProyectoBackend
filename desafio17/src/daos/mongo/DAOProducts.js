@@ -1,5 +1,5 @@
 const MongoDBContainer = require('../../container/MongoDBContainer')
-import {myLoggerError } from '../../utils/logger.js'
+const {myLoggerError} = require ('../../service/logger.js')
 const Product = require('../../models/products')
 
 class DAOProducts extends MongoDBContainer{

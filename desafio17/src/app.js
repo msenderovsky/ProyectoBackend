@@ -4,7 +4,7 @@ const ejs = require('ejs')
 
 const productsRoutes = require('./routers/products')
 const cartsRoutes = require('./routers/carts')
-const routesAuth = require('./routers/auth.router')
+const routesAuth = require('./routers/auth')
 
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views/partials')

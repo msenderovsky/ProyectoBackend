@@ -1,8 +1,8 @@
-const productController = require('../controllers/products')
+const productsController = require('../controllers/products')
 const { Router } = require('express')
 
 const productsRouter = Router()
-const products= productController.getInstance()
+const products= productsController.getInstance()
 
 productsRouter.post('/', products.saveProduct)
 productsRouter.get('/', products.showProducts)
