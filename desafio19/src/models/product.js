@@ -1,15 +1,4 @@
-import {graphqlHTTP} from "express-graphql"
 import {buildSchema} from "graphql"
-
-const app=express()
-import {
-    getProducts, 
-    getProduct, 
-    createProduct, 
-    updateProduct, 
-    deleteProduct
-} from "./service/functions.js"
-
 
 class Producto {
     constructor(id, { name, description, code, image, price }) {
