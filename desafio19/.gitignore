@@ -1,0 +1,5 @@
+node_modules
+mongoBase
+__temporal__/*
+app/config/ecommerce-dde6f-firebase-adminsdk-yvkl6-7674b98f02.json
+.env
