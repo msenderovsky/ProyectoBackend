@@ -5,9 +5,8 @@ const ejs = require('ejs')
 const productsRoutes = require('./routers/products')
 const cartsRoutes = require('./routers/carts')
 const routesAuth = require('./routers/auth')
-
-import {graphqlHTTP} from "express-graphql"
-import { schema } from "./models/products.js"
+const graphqlHTTP= require ('express-graphql')
+const schema= require ('./models/products.js')
 
 import {
     getProducts, 
