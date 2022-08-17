@@ -1,11 +1,12 @@
-import { Router } from "../../deps.ts ";
+import { Router } from "../../deps.js";
 import {
     findAll,
     findUser,
     createUser,
     updateUser,
     deleteUser,
-} from "../handlers/users.handler.ts ";
+} from "../handlers/users.handler.js";
+
 export const router = new Router()
 .get("/api/users", findAll)
 .get("/api/users/:userId ", findUser)

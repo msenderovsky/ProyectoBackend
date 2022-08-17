@@ -13,7 +13,12 @@ class cartController{
         res.status(201).send(savedCart)
     }
 
+    async findByID(req,res){
+        
+    }
+
     async addCartProduct(req, res){
+        const id= req.params.id
         const cart = await DAOCarts.addCartProduct(req.params.id, req.params.idCarrito)
         res.send(cart)
     }

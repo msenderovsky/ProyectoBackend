@@ -1,4 +1,4 @@
-import { logger } from "../../deps.ts"; Logger
+import { logger } from "../../deps.js"; 
 await logger.setup({
     handlers: {
         console: new
@@ -17,4 +17,4 @@ await logger.setup({
         }
     }
 });
-export default logger.getLogger();
+export const userLogger= logger.getLogger();

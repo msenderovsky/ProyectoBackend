@@ -1,23 +1,23 @@
 const {createTransport} = require('nodemailer')
-const TEST_MAIL = process.env.MIMAIL2
 const TO_MAIL = process.env.MIMAIL
 const password = process.env.PASS
 
-const sendMail = async (TEST_MAIL, productsString) =>  {
+const sendMail = async (TEST_MAIL, productsString,user) =>  {
+
     const transporter = createTransport({
         service: 'gmail',
         port: 587,
         auth: {
-            user: TEST_MAIL ,
-            pass: password
+            user: 'msenderovsky@gmail.com' ,
+            pass: 'xlmqjzmdvcyjilgl'
         }
     });
-    
+    //${user.name}
     const mailOptions = {
         from : TEST_MAIL,
         to: TO_MAIL,
         subject: 'Nuevo pedido de ',
-        html: `Hola ${user.name},
+        html: `Hola ,
         'Gracias por su compra, a continuación un resumen de su pedido'
         '${productsString}'
 
@@ -28,4 +28,4 @@ const sendMail = async (TEST_MAIL, productsString) =>  {
         console.log(info)
 }
 
-module.exports = sendMail
+module.exports = {sendMail}

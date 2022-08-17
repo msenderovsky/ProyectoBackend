@@ -42,6 +42,8 @@ class AuthController {
                     name : user.name,
                     age : user.age,
                     address: user.address,
+                    email: user.email,
+                    id: user.id
                 }
                 const token = jwt.sign(datos, 'clave_secreta')
                 res.json({

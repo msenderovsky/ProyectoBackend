@@ -39,12 +39,13 @@ class DAOCarts extends MongoDBContainer{
             console.log(cart)
             return cart
         }catch(error){
-            myLoggerError.error("Error in addCartProduct " + error)
+            console.log(error)
+            //myLoggerError.error("Error in addCartProduct " + error)
         }
     }
 
 
-    async deleteCartPRoduct(cartID, productID){
+    async deleteCartProduct(cartID, productID){
         try{
             const cart = await super.showElement(Cart, cartID)
             cart.products = cart.producto.filter(prod => prod != productID)
@@ -60,6 +61,16 @@ class DAOCarts extends MongoDBContainer{
         try{
             const toDelete = await super.delete(Cart, id)
             return toDelete
+        }catch(error){
+            myLoggerError.error("Error in deleteCart " + error)
+        }
+    }
+
+
+    async findByID(ID){
+        try{
+            const cart = await super.showElement(Cart, ID)
+            return cart
         }catch(error){
             myLoggerError.error("Error in deleteCart " + error)
         }

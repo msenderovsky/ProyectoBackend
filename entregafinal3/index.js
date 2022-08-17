@@ -24,7 +24,7 @@ app.use(session({
     saveUninitialized: false
 }));
 
-sendMail()
+//sendMail()
 //sendSMS()
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`))

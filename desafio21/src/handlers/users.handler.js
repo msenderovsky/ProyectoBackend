@@ -1,27 +1,27 @@
-import users from "../../../desafio19/src/models/users.js";
+//import users from "../../../desafio19/src/models/users.js";
 import { Context , helpers } from "../../deps.js";
-import logger from "../middlewares/logger";
-import { User } from  "../types/user.type";
+import {userLogger} from "../middlewares/logger.js";
+//import { userModel } from  "../types/user.type.js";
 
-const DB_USERS : User[] = [];
+const DB_USERS = [];
 DB_USERS .push({uuid: "1", name: 'John Lennon ', birthDate : new Date()});
 DB_USERS .push({uuid: "2", name: 'Ringo Star ', birthDate : new Date()});
 DB_USERS .push({uuid: "3", name: 'George Harrison ', birthDate : new Date()});
 DB_USERS .push({uuid: "4", name: 'Paul McCartney ', birthDate : new Date()});
 
-export const findAll = async (ctx: Context ) => {
+export const findAll = async (ctx ) => {
     try {
         ctx.response .status = 200;
-        logger.debug(`status: ${ctx.response .status} method: findAll handler `);
+        userLogger.debug(`status: ${ctx.response .status} method: findAll handler `);
         ctx.response .body = await {code: '00', data: DB_USERS };
         } catch (error) {
             ctx.response .status = 500;
-            logger.error(`status: ${ctx.response .status} ${error}`);
+            userLogger.error(`status: ${ctx.response .status} ${error}`);
             ctx.response .body = {code: '99', msg: error};
     }
 }
 
-export const findUser= async (ctx: Context) =>{
+export const findUser= async (ctx) =>{
     try{
         const {userID} = helpers.getQuery(ctx, {mergeParams: true});
         const user= await DB_USERS.find((u)=> u.uuid==userID);
@@ -32,18 +32,18 @@ export const findUser= async (ctx: Context) =>{
         }
     }catch(error){
         ctx.response.status=500;
-        logger.error(`status: ${ctx.response.status} ${error}`)
+        userLogger.error(`status: ${ctx.response.status} ${error}`)
         ctx.response.body= {code: '99', msg: error}
     }
 }
 
-export const createUser = async (ctx: Context ) => {
+export const createUser = async (ctx ) => {
     try {
         ctx.response.status = 201;
-        logger.debug(`status: ${ctx.response.status} method: createUser handler `);
+        userLogger.debug(`status: ${ctx.response.status} method: createUser handler `);
         const { name, birthDate } = await ctx.request.body().value;
         const newId = Number(DB_USERS[DB_USERS.length - 1].uuid) + 1;
-        const user: User = {
+        const user = {
             uuid: newId.toString(),
             name: name,
             birthDate: new Date(birthDate)
@@ -52,15 +52,15 @@ export const createUser = async (ctx: Context ) => {
         ctx.response.body = await {code: '00', data: user};
     } catch (error) {
         ctx.response.status = 500;
-        logger.error(`status: ${ctx.response.status} ${error}`);
+        userLogger.error(`status: ${ctx.response.status} ${error}`);
         ctx.response.body = {code: '99', msg: error};
     }
 }
 
-export const updateUser = async (ctx: Context ) => {
+export const updateUser = async (ctx ) => {
     try {
         ctx.response.status = 202;
-        logger.debug(`status: ${ctx.response.status} method: updateUser handler `);
+        userLogger.debug(`status: ${ctx.response.status} method: updateUser handler `);
         const { userId } = helpers .getQuery (ctx, {mergeParams : true});
     const userIndex = await DB_USERS .findIndex ((u) => u.uuid == userId );
     if (userIndex ) {
@@ -72,15 +72,15 @@ export const updateUser = async (ctx: Context ) => {
     }
     } catch (error ) {
         ctx.response .status = 500;
-        logger .error (`status: ${ctx.response .status } ${error }`);
+        userLogger .error (`status: ${ctx.response .status } ${error }`);
     ctx.response .body = {msg: error };
     }
 }
 
-export const deleteUser = async (ctx: Context ) => {
+export const deleteUser = async (ctx) => {
     try {
         ctx.response .status = 200;
-        logger .debug (`status: ${ctx.response .status } method: deleteUser handler `);
+        userLogger .debug (`status: ${ctx.response .status } method: deleteUser handler `);
         const { userId } = helpers .getQuery (ctx, {mergeParams : true});
         const userIndex = await DB_USERS .findIndex ((u) => u.uuid == userId );
         if (userIndex ) {
@@ -91,7 +91,7 @@ export const deleteUser = async (ctx: Context ) => {
     }
     } catch (error ) {
         ctx.response .status = 500;
-        logger .error (`status: ${ctx.response .status } ${error }`);
+        userLogger .error (`status: ${ctx.response .status } ${error }`);
         ctx.response .body = {msg: error };
     }
 }

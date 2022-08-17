@@ -1,40 +1,44 @@
-const cartController = require('../controllers/carts')
+const DAOCart = require(`../daos/${process.env.ENVIRONMENT}/DAOCarts`)
 const userController = require('../controllers/auth')
 const { Router } = require('express')
 const TEST_MAIL = process.env.MIMAIL2
-const mail = require('../config/nodemailer')
+const { sendMail} = require('../config/nodemailer')
 const sms = require('../config/twilioSMS')
+const jwt= require('jsonwebtoken')
 
 const cartRoute = Router()
 
-cartRoute.get('/', cartController.showCarts)
-cartRoute.get('./carts/compra/:id/', async(req,res)=>{
+cartRoute.get('/', DAOCart.showCarts)
+cartRoute.get('/compra/:id', async(req,res)=>{
     try{
-        const cart= await cartController.findByID(req.params.id)
-        const products= await productController.find({ _id:{$in: cart.products}})
-        const total= products.reduce((total, product) => total+product.price, 0)
+        const token= req.headers.token
+        const datos= jwt.verify(token,'clave_secreta')
+        console.log(datos)
+        const cart= await DAOCart.findByID(req.params.id)
+        const total= cart.products.reduce((total, product) => total+product.price, 0)
         //const message= `Hola ${user.username}, tu compra fue realizada exitosamente`
 
-        mail.sendMail(TEST_MAIL, JSON.stringify(cart.products))
+        sendMail(TEST_MAIL, JSON.stringify(cart))
         //sms.sendSMS(TEST_MAIL, JSON.stringify(cart.products))
         //const user= await userController.
 
         res.json({
             message: "Compra realizada exitosamente",
             cart: cart,
-            user: user,
-            products: products,
+            user: {name: datos.name, age: datos.age, address: datos.address, email: datos.email, id: datos.id},
+            products: cart.products,
             total: total
         })
 
     }catch(error){
+        console.log(error)
         res.status(500).json({message:"Error realizando la compra"})
     }
 })
-cartRoute.post('/', cartController.addCart)
-cartRoute.post('/:idCarrito/producto/:id', cartController.addCartProduct)
-cartRoute.delete('/:idCarrito/producto/:id', cartController.deleteCartProduct)
-cartRoute.delete('/:id', cartController.deleteCart)
+cartRoute.post('/', DAOCart.addCart)
+cartRoute.post('/:idCarrito/product/:id', DAOCart.addCartProduct)
+cartRoute.delete('/:idCarrito/product/:id', DAOCart.deleteCartProduct)
+cartRoute.delete('/:id', DAOCart.deleteCart)
 
 
 module.exports = cartRoute
