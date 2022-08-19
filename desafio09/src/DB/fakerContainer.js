@@ -20,4 +20,4 @@ class fakerContainer {
     }
 }
 
-module.exports=generateRandomProduct
+module.exports=fakerContainer.generateRandomProduct()
