@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+    <title>Register</title>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center">Logueese</h1>
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-sm-8 col-lg-4 col-md-6">
+          <form
+            class="form"
+            action="/products"
+            method="post"
+            role="form"
+            autocomplete="off"
+          >
+            <div class="form-group">
+              <input
+                id="email"
+                name="email"
+                placeholder="Escriba su email"
+                class="form-control"
+                type="text"
+                required
+              />
+            </div>
+            <br />
+            <div class="form-group">
+              <input
+                id="loginPassword"
+                name="password"
+                placeholder="Escriba su contraseña"
+                class="form-control"
+                type="password"
+                required
+              />
+            </div>
+            <br />
+            <div class="form-group">
+              <div class="d-grid gap-2">
+                <input
+                  class="btn btn-warning"
+                  type="submit"
+                  value="Iniciar Sesion"
+                />
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="container mt-5">
+        <h1 class="text-center">Registrese</h1>
+        <div class="row d-flex justify-content-center align-items-center">
+          <div class="col-sm-8 col-lg-4 col-md-6">
+            <form
+              class="form"
+              action="/"
+              method="post"
+              role="form"
+              autocomplete="off"
+            >
+              <div class="form-group mt-4">
+                <input
+                  id="name"
+                  name="name"
+                  placeholder="Nombre"
+                  class="form-control"
+                  type="text"
+                  required
+                  autofocus
+                />
+              </div>
+              <div class="form-group mt-4">
+                <input
+                  id="email"
+                  name="email"
+                  placeholder="Ingrese su email"
+                  class="form-control"
+                  type="email"
+                  required
+                  autofocus
+                />
+              </div>
+              <div class="form-group mt-4">
+                <select name="prefix">
+                  <option aria-required="true">Seleccione</option>
+                  <option value="+54" aria-required="true">+54</option>
+                </select>
+                <input
+                  id="phone"
+                  name="phone"
+                  placeholder="Ingrese su telefono"
+                  type="tel"
+                  class="form-control"
+                  type="text"
+                  required
+                  autofocus
+                />
+              </div>
+              <br />
+              <div class="form-group">
+                <input
+                  id="password"
+                  name="password"
+                  placeholder="Contraseña"
+                  onchange="check()"
+                  class="form-control"
+                  type="password"
+                  required
+                />
+              </div>
+              <br />
+              <div class="form-group">
+                <input
+                  id="confirmPassword"
+                  name="ConfPassword"
+                  placeholder="reenvío de Contraseña"
+                  onchange="check()"
+                  class="form-control"
+                  type="password"
+                  required
+                />
+              </div>
+              <br />
+              <hr>
+              <div class="form-group">
+                <div class="d-grid gap-2">
+                  <input
+                    class="btn btn-warning"
+                    type="submit"
+                    value="Registrar"
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  </body>
+  <script>
+    function check() {
+            if (document.getElementById('password').value ==
+                document.getElementById('confirmPassword').value) {
+                    document.getElementById('message').style.color = 'green';
+                    document.getElementById('message').innerHTML = 'matching';
+
+            } else {
+                    alert ("\nPassword did not match: Please try again...")
+            }
+        }
+  </script>
+</html>
+

@@ -10,13 +10,17 @@ class AuthController {
         res.render('login')
     }
     renderRegister(req,res){
-        res.render('register')
+        res.render('both')
     }
+    renderBoth(req,res){
+        res.render('both')
+    }
+
     async register(req,res){
-       const salt = await bcrypt.genSalt(10)
-       const password = await bcrypt.hash(req.body.password, salt)
+        const salt = await bcrypt.genSalt(10)
+        const password = await bcrypt.hash(req.body.password, salt)
         
-     const user = await  usersSchema.create({
+        const user = await  usersSchema.create({
             name: req.body.name,
             age: req.body.age,
             address: req.body.address,
@@ -25,9 +29,9 @@ class AuthController {
             image: req.body.image,
             username: req.body.username,
             password: password
-       })
-       
-        res.json({user})
+        })
+
+        res.render('both')
     }
 
     async login(req,res){
