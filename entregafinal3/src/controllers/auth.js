@@ -1,4 +1,5 @@
 const usersSchema = require('../models/users')
+const productsSchema = require('../models/products')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
@@ -65,10 +66,35 @@ class AuthController {
     }
 
     async products (req, res) {
+        const products=[{
+                category:"Remeras",
+                description: "Remera color plano",
+                imgage: String,
+                price: "2000"
+            }, 
+            {
+                category:"Remeras",
+                description: "Remera estampada",
+                imgage: String,
+                price: "3000"
+            },
+            {
+                category:"Buzos",
+                description: "Buzo color plano",
+                imgage: String,
+                price: "5000"
+            },
+            {
+                category:"Buzos",
+                description: "Buzo estampado",
+                imgage: String,
+                price: "7000"
+            }]
         try { 
+            
             logger.info('Se accedió a productos')
             res.render('products', {
-                user: req.user
+                user: req.user, products
             })
         } catch (error) {
             logger.error('Error en productos: ' + error)

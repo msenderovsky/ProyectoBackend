@@ -12,8 +12,8 @@ class DAOProducts extends MongoDBContainer{
             const product1 = new Product({
                 title: data.title,
                 price: data.price,
-                url: data.url,
-                date: Date().toString()
+                description: data.description,
+                category: data.category
             })
             const addedProduct = await super.save(product1) 
             return addedProduct
