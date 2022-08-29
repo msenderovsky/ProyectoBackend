@@ -1,4 +1,4 @@
-const usersSchema = require('../models/users')
+const userModel = require('../models/users')
 const productsSchema = require('../models/products')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -8,7 +8,7 @@ class AuthController {
 
     }
     renderLogin(req,res){
-        res.render('login')
+        res.render('products')
     }
     renderRegister(req,res){
         res.render('both')
@@ -21,22 +21,20 @@ class AuthController {
         const salt = await bcrypt.genSalt(10)
         const password = await bcrypt.hash(req.body.password, salt)
         
-        const user = await  usersSchema.create({
+        const user = await  userModel.create({
             name: req.body.name,
-            age: req.body.age,
-            address: req.body.address,
             email: req.body.email,
             phone: req.body.prefix + "-" + req.body.phone,
-            image: req.body.image,
-            username: req.body.username,
             password: password
         })
-
+        
         res.render('both')
     }
 
     async login(req,res){
-        const user = await usersSchema.findOne({email: req.body.email})
+        console.log("testing")
+        const user = await userModel.findOne({email: req.body.email})
+        console.log(user)
         if(user){
             const equalsPassword = await bcrypt.compare(req.body.password, user.password)
             console.log(equalsPassword)
@@ -45,17 +43,19 @@ class AuthController {
             if(equalsPassword) {
                 const datos = {
                     name : user.name,
-                    age : user.age,
-                    address: user.address,
                     email: user.email,
-                    id: user.id
+                    phone: user.phone
                 }
                 const token = jwt.sign(datos, 'clave_secreta')
-                res.json({
-                    datos,
+                /*res.json({
+                    datos, 
                     token
-                })
-                res.render('products')
+                })*/
+                //res.redirect('/products',{datos, token})
+                const arr= await productsSchema.find()
+                const arr2=[datos, token, arr]
+                console.log(arr)
+                res.render('products', {arr2})
             } else {
                 res.send('Reescriba sus datos ')
             }
@@ -66,30 +66,7 @@ class AuthController {
     }
 
     async products (req, res) {
-        const products=[{
-                category:"Remeras",
-                description: "Remera color plano",
-                imgage: String,
-                price: "2000"
-            }, 
-            {
-                category:"Remeras",
-                description: "Remera estampada",
-                imgage: String,
-                price: "3000"
-            },
-            {
-                category:"Buzos",
-                description: "Buzo color plano",
-                imgage: String,
-                price: "5000"
-            },
-            {
-                category:"Buzos",
-                description: "Buzo estampado",
-                imgage: String,
-                price: "7000"
-            }]
+        
         try { 
             
             logger.info('Se accedió a productos')

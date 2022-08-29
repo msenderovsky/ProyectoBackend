@@ -1,4 +1,4 @@
-const DAOCart = require(`../daos/${process.env.ENVIRONMENT}/DAOCarts`)
+const DAOCart = require(`../daos//DAOCarts`)
 const userController = require('../controllers/auth')
 const { Router } = require('express')
 const TEST_MAIL = process.env.MIMAIL2

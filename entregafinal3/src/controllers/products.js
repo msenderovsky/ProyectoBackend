@@ -1,5 +1,5 @@
 require('dotenv').config()
-const DAOProducts = require('../daos/'+process.env.ENVIRONMENT+'/DAOProducts')
+const DAOProducts = require('../daos//DAOProducts')
 
 
 class productsController{
@@ -11,7 +11,8 @@ class productsController{
 
     async showProducts(req, res){
         const products = await DAOProducts.listProducts()
-        res.send(products)
+        console.log(req.user)
+        res.render('products', products)
     }
     
     async showProduct(req, res){

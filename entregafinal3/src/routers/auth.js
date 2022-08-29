@@ -10,7 +10,7 @@ router.post('/login', authController.login )*/
 
 router.get('/products', authController.renderLogin)
 router.post('/products', authController.login)
-router.post ('/', authController.renderBoth)
+router.post ('/', authController.register)
 router.get ('/', authController.renderBoth)
 
 

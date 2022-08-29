@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+        <link rel="stylesheet" href="./css/styles.css">
+
+        <script src="/socket.io/socket.io.js"></script>
     <title>Productos</title>
 </head>
 <body>
@@ -19,16 +23,14 @@
                 </div>
                 <div class="d-flex">
                     <div class="collapse navbar-collapse">
+                        <a class="btn btn-dark"
+                                  >carrito</a>
                         <ul class="navbar-nav">
-                            <li class="nav-item dropdown">
+                            <li class="nav-item dropdown">                                    
+                                Nombre: <%=arr2[0].name%>
+                                Mail: <%=arr2[0].email%>
+                                Phone: <%=arr2[0].phone%>
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Usuario: @<%=user.username%>
-                                    <%=user.name%>
-                                    <%=user.age%>
-                                    <%=user.address%>
-                                    <%=user.email%>
-                                    <%=user.phone%>
-                                    <%=user.image%>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
                                     <li><a class="dropdown-item" href="/auth/logout">Log out</a></li>
@@ -48,32 +50,49 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Titulo</th>
+                                <th scope="col">Item</th>
                                 <th scope="col">Descripción</th>
                                 <th scope="col">Precio</th>
+                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
+                            <% if (arr2.length>0) {
+                            %>
+                                <% arr2[2].forEach((product) => {
+                                %>
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Remera</td>
-                                <td>Azul, XL, Estampada.</td>
-                                <td>$800</td>
+                                <td><%= product.name %></td>
+                                <td><%= product.description %></td>
+                                <td><%= product.price %></td>
+                                <td>
+                                    <a class="btn btn-dark" onclick="updCartAdd(product)">agregar item</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-dark" onclick="updCartDel(product)">quitar item</a>
+                                </td>
+                                <% }) %>
+                            <%  } %>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="col-4">
-                        <%- include('partials/chat.ejs'); %> 
-                    </div>
-                </div>
+                </div> 
+            <div class="col-4">
+                <%- include('chat.ejs'); %> 
             </div>
         </div>
         <div>
-            <a class="btn btn-dark" onclick="sendmail() /*,sendSMS()*/"
+            <a class="btn btn-dark" onclick="sendmail()"
                   >enviar Mail y SMS</a>
         </div>
     </main>
+    <script>
+        function thisRow(x) {
+            return x.rowIndex;
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/ejs@3.1.6/ejs.min.js"></script>
+    <script src="../../client.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 </html>

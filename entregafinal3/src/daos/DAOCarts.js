@@ -1,7 +1,7 @@
-const MongoDBContainer = require('../../container/MongoDBContainer')
-const myLoggerError= require ('../../service/logger.js')
+const MongoDBContainer = require('../container/MongoDBContainer')
+const myLoggerError= require ('../service/logger.js')
 const Products = require('./DAOProducts')
-const Cart = require('../../models/carts')
+const Cart = require('../models/carts')
 
 class DAOCarts extends MongoDBContainer{
     constructor(){

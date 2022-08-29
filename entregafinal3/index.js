@@ -3,7 +3,6 @@ const app = require('./src/app')
 const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
 const sendMail = require('./src/config/nodemailer');
-const sendSMS = require('./src/config/twilioSms');
 const session = require('express-session')
 const Container = require("./src/contenedor");
 const { optionsSQLite } = require("./src/DB/optionsSQLite");
@@ -61,6 +60,5 @@ io.on("connection", async (socket) => {
 
 
 //sendMail()
-//sendSMS()
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`))
