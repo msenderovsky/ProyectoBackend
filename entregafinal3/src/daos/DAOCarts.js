@@ -20,7 +20,6 @@ class DAOCarts extends MongoDBContainer{
         }
     }
 
-
     async showCarts () {
         try{
             const carts = await super.listSublist(Cart, 'products')
@@ -29,7 +28,6 @@ class DAOCarts extends MongoDBContainer{
             myLoggerError.error("Error in showCarts " + error)
         }
     }
-
 
     async addCartProduct(productID, cartID){
         try{
@@ -45,7 +43,6 @@ class DAOCarts extends MongoDBContainer{
         }
     }
 
-
     async deleteCartProduct(cartID, productID){
         try{
             const cart = await super.showElement(Cart, cartID)
@@ -57,7 +54,6 @@ class DAOCarts extends MongoDBContainer{
         }
     }
 
-
     async deleteCart(id){
         try{
             const toDelete = await super.delete(Cart, id)
@@ -66,7 +62,6 @@ class DAOCarts extends MongoDBContainer{
             myLoggerError.error("Error in deleteCart " + error)
         }
     }
-
 
     async findByID(ID){
         try{

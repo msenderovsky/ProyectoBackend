@@ -1,5 +1,4 @@
-const DAOCart = require(`../daos//DAOCarts`)
-const userController = require('../controllers/auth')
+const cartController = require('../controllers/carts')
 const { Router } = require('express')
 const TEST_MAIL = process.env.MIMAIL2
 const { sendMail} = require('../config/nodemailer')
@@ -8,13 +7,13 @@ const jwt= require('jsonwebtoken')
 
 const cartRoute = Router()
 
-cartRoute.get('/', DAOCart.showCarts)
+//cartRoute.get('/', cartController.showCart)
 cartRoute.get('/compra/:id', async(req,res)=>{
     try{
         const token= req.headers.token
         const datos= jwt.verify(token,'clave_secreta')
         console.log(datos)
-        const cart= await DAOCart.findByID(req.params.id)
+        const cart= await cartController.findByID(req.params.id)
         const total= cart.products.reduce((total, product) => total+product.price, 0)
         //const message= `Hola ${user.username}, tu compra fue realizada exitosamente`
 
@@ -35,10 +34,12 @@ cartRoute.get('/compra/:id', async(req,res)=>{
         res.status(500).json({message:"Error realizando la compra"})
     }
 })
-cartRoute.post('/', DAOCart.addCart)
-cartRoute.post('/:idCarrito/product/:id', DAOCart.addCartProduct)
-cartRoute.delete('/:idCarrito/product/:id', DAOCart.deleteCartProduct)
-cartRoute.delete('/:id', DAOCart.deleteCart)
+
+cartRoute.get('/', cartController.showCartProducts)
+cartRoute.post('/', cartController.addCart)
+cartRoute.post('/:idCarrito/product/:id', cartController.addCartProduct)
+cartRoute.delete('/:idCarrito/product/:id', cartController.deleteCartProduct)
+cartRoute.delete('/:id', cartController.deleteCart)
 
 
 module.exports = cartRoute

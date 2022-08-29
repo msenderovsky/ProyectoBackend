@@ -1,5 +1,6 @@
 const userModel = require('../models/users')
 const productsSchema = require('../models/products')
+const cartsSchema = require('../models/carts')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 
@@ -35,6 +36,7 @@ class AuthController {
         console.log("testing")
         const user = await userModel.findOne({email: req.body.email})
         console.log(user)
+        console.log("testing2")
         if(user){
             const equalsPassword = await bcrypt.compare(req.body.password, user.password)
             console.log(equalsPassword)
@@ -47,13 +49,15 @@ class AuthController {
                     phone: user.phone
                 }
                 const token = jwt.sign(datos, 'clave_secreta')
-                /*res.json({
-                    datos, 
-                    token
-                })*/
-                //res.redirect('/products',{datos, token})
+                console.log("----------a------------")
+                let cart= await cartsSchema.find(datos).email
+                console.log("---------b-------------")
+                if (cart==null)
+                    cart= await cartsSchema.create({email: datos.email})
+                console.log("------------------------")
+                console.log(cart)
                 const arr= await productsSchema.find()
-                const arr2=[datos, token, arr]
+                const arr2=[datos, token, arr, cart]
                 console.log(arr)
                 res.render('products', {arr2})
             } else {

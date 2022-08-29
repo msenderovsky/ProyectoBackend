@@ -15,7 +15,6 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-danger">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">#Logo</a>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
                         <a class="nav-link active" aria-current="page" href="/">Productos</a>
@@ -23,8 +22,7 @@
                 </div>
                 <div class="d-flex">
                     <div class="collapse navbar-collapse">
-                        <a class="btn btn-dark"
-                                  >carrito</a>
+                        <button class="btn btn-dark" onclick="showCartProducts()">Carrito</button>
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown">                                    
                                 Nombre: <%=arr2[0].name%>
@@ -66,10 +64,10 @@
                                 <td><%= product.description %></td>
                                 <td><%= product.price %></td>
                                 <td>
-                                    <a class="btn btn-dark" onclick="updCartAdd(product)">agregar item</a>
+                                    <button class="btn btn-dark" onclick="updCartAdd(product, arr2[3])">Agregar Item</button>
                                 </td>
                                 <td>
-                                    <a class="btn btn-dark" onclick="updCartDel(product)">quitar item</a>
+                                    <button class="btn btn-dark" onclick="updCartDel(product, arr2[3])">Quitar Item</button>
                                 </td>
                                 <% }) %>
                             <%  } %>
@@ -86,13 +84,10 @@
                   >enviar Mail y SMS</a>
         </div>
     </main>
-    <script>
-        function thisRow(x) {
-            return x.rowIndex;
-        }
-    </script>
+    </body>
     <script src="https://cdn.jsdelivr.net/npm/ejs@3.1.6/ejs.min.js"></script>
+    <script src="../../controllers/carts.js"></script>
     <script src="../../client.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-</body>
+
 </html>

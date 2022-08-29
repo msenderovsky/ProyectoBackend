@@ -1,20 +1,27 @@
 require('dotenv').config()
-const DAOCarts = require('../daos/'+process.env.ENVIRONMENT+'/DAOCarts')
+//const { render } = require('../app');
+const DAOCarts = require('../daos/DAOCarts')
 
 class cartController{
 
-    async updCartAdd(product){
-        const number= document.getElementsByClassName("DDMenu")[0]
-        number.addEventListener("click", () => {
-            this.addCartProduct(product.id)
-        });
+    async showCartProducts(req,res){
+        
+        console.log("CARRITO ACA ABAJO")
+        
+        //console.log(cartArr)
+        res.render('cart' )
     }
 
-    async updCartDel(product){
-        const number= document.getElementsByClassName("DDMenu")[0]
-        number.addEventListener("click", () => {
-            this.deleteCartProduct(product.id)
-        });
+    async updCartAdd(product, cart){
+        cart.addCartProduct(product.id)
+        console.log("------------------")
+        console.log(cart)
+    }
+
+    async updCartDel(product, cart){
+            cart.deleteCartProduct(product.id)
+            console.log("------------------")
+            console.log(cart)
     }
 
     async showCarts (req, res) {
@@ -27,8 +34,9 @@ class cartController{
         res.status(201).send(savedCart)
     }
 
-    async findByID(req,res){
-        
+    async findByID(id){
+        const carts = await DAOCarts.findByID(id)
+        res.send(carts)
     }
 
     async addCartProduct(req, res){

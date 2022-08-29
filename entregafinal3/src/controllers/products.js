@@ -1,5 +1,5 @@
 require('dotenv').config()
-const DAOProducts = require('../daos//DAOProducts')
+const DAOProducts = require('../daos/DAOProducts')
 
 
 class productsController{
