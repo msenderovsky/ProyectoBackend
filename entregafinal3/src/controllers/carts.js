@@ -8,20 +8,8 @@ class cartController{
         
         console.log("CARRITO ACA ABAJO")
         
-        //console.log(cartArr)
+        console.log(cartArr)
         res.render('cart' )
-    }
-
-    async updCartAdd(product, cart){
-        cart.addCartProduct(product.id)
-        console.log("------------------")
-        console.log(cart)
-    }
-
-    async updCartDel(product, cart){
-            cart.deleteCartProduct(product.id)
-            console.log("------------------")
-            console.log(cart)
     }
 
     async showCarts (req, res) {
@@ -46,7 +34,8 @@ class cartController{
     }
 
     async deleteCartProduct(req, res){
-        const cart = await DAOCarts.deleteCartProduct(req.params.idCarrito, req.params.id)
+        const id= req.params.id
+        const cart = await DAOCarts.deleteCartProduct(req.params.idCarrito, id)
         res.send(cart)
     }
 
