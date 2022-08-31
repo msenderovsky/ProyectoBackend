@@ -3,36 +3,35 @@ const DAOOrders = require ("../daos/DAOrders")
 const sendMail = require ("../config/nodemailer.js")
 
 module.exports = class orderService {
-    async getOrders(){
-        const getOrders = await DAOOrders.getOrders()
-        return getOrders
+
+    async listOrders(){
+        const orders = await DAOOrders.listOrders()
+        return orders
     }
 
-    async getOrder(orderID){
-        const getOrder = await DAOOrders.getOrder(idOrder)
-        return getOrder
+    async listOrder(orderID){
+        const toFind = await DAOOrders.listOrder(orderID)
+        return toFind
     }
 
-    async generateOrder(cartID,order){
-        const cart = await CartDao.getCartById(cartID)
-        const orders = await this.getOrders()
+    async addOrder(cartID,order){
+        const cart = await DAOCarts.showCart(cartID)
+        const orders = await listOrders()
         const lastOrder = orders.at(-1) 
-        let incNumberOrder; 
-        
+        let incOrder; 
         if(orders.length !== 0 ){
-            incNumberOrder = lastOrder.numberOrder + 1
+            incOrder = lastOrder.numberOrder + 1
         } else {
-            incNumberOrder = 1
+            incOrder = 1
         }
-        
-        const generate = await DAOCarts.generateOrder(cart,order, incNumberOrder)
-        await sendMail(generate)
-        await DAOCarts.deleteCartById(idCart) 
-        return generate
+        const newOrder = await DAOOrders.addOrder(cart,order, incOrder)
+        await sendMail(newOrder)
+        await DAOCarts.deleteCart(cartID) 
+        return newOrder
     }
 
-    async deleteOrderById(orderID){
-        const toDelete = await DAOOrders.deleteOrderById(orderID)
+    async deleteByID(orderID){
+        const toDelete = await DAOOrders.deleteById(orderID)
         return toDelete
     }
     async deleteAllOrders(){

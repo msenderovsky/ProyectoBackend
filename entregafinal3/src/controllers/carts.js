@@ -1,4 +1,4 @@
-import cartServices from '../service/cartService'
+const cartService = require ('../service/cartService')
 const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
 
 class cartController{
@@ -6,14 +6,14 @@ class cartController{
     async showCartProducts(req,res){
         
         console.log("CARRITO ACA ABAJO")
-        const cart= await cartServices.findByID(req.body)
-        const arr= await cartServices.showCartProducts(cart.email)
+        const cart= await cartService.findByID(req.body)
+        const arr= await cartService.showCartProducts(cart.email)
         res.render('cart', {arr})
     }
 
     async showCarts (req, res) {
         try{
-            const carts = await cartServices.showCarts()
+            const carts = await cartService.showCarts()
             res.send(carts)
         }catch(error){
             myLoggerError.error("Error in showCarts " + error)
@@ -22,7 +22,7 @@ class cartController{
 
     async addCart(req, res){
         try{
-            const savedCart = await cartServices.addCart()
+            const savedCart = await cartService.addCart()
             res.status(201).send(savedCart)  
         }catch(error){
             myLoggerError.error("Error in addCart " + error)
@@ -32,7 +32,7 @@ class cartController{
     async showCart(req,res){
         try{
             const id = req.params.cartID
-            const cart = await cartServices.showCart(id)
+            const cart = await cartService.showCart(id)
             res.send(cart)
         }catch(error){
             myLoggerError.error("Error in showCart " + error)
@@ -42,7 +42,7 @@ class cartController{
     async addCartProduct(req, res){
         const {cartID, productID, cant} = req.params
         try {
-            const cart = await CartServices.addProdToCart(cartID, productID, cant)
+            const cart = await cartService.addProdToCart(cartID, productID, cant)
             res.status(201).send(cart) 
         } catch (error) {
             myLoggerError.error("Error in addCartProduct " + error) 
@@ -52,7 +52,7 @@ class cartController{
     async deleteCartProduct(req, res){
         try{
             const {idCart, idProduct} = req.params
-            const cart = await cartServices.deleteCartProduct(cartID, productID)
+            const cart = await cartService.deleteCartProduct(cartID, productID)
             res.send(cart)
         }catch(error){
             myLoggerError.error("Error in deleteCartProduct " + error)
