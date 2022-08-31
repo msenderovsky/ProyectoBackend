@@ -1,87 +1,50 @@
-const MongoDBContainer = require('../container/MongoDBContainer')
-//const myLoggerError= require ('../service/logger.js')
-const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
-const Products = require('./DAOProducts')
-const Cart = require('../models/carts')
+import Cart from '../models/carts'
+import Product from '../models/products'
 
-class DAOCarts extends MongoDBContainer{
-    constructor(){
-        super()
+module.exports = class DAOCart{
+
+    async addCart() {
+        const addedCart = await Cart.create({
+            date: Date().toString()
+        })
+        return addedCart
     }
 
-    async addCart(userMail){
-        try{
-            const cart = new Cart({
-                fecha: Date().toString(),
-                email: userMail
-            })
-            const savedCart = await super.save(cart)
-            return savedCart
-        }catch(error){
-            myLoggerError.error("Error in addCart " + error)
-        }
+    async showCarts(){
+        const carts = await Cart.find()
+        return carts
     }
 
-    async showCarts () {
-        try{
-            const carts = await super.listSublist(Cart, 'products')
-            return carts
-        }catch(error){
-            myLoggerError.error("Error in showCarts " + error)
-        }
+    async showCart(id){
+        const cart = await Cart.findById({_id: id})
+        return cart 
+    }
+    
+    async addCartProduct(cartID,productID, cant){
+        const product = await Product.findById({_id:productID})
+        product.cant = cant
+        const addedProd = await Cart.updateOne({_id: cartID},{$addToSet: {products: product} }) ;
+        return addedProd
     }
 
-    async showCartProducts(ID){
-        try{
-            const cart = await super.showElement(Cart, ID)
-            return cart.products
-        }catch(error){
-            myLoggerError.error("Error in showCarts " + error)
-        }
+    
+    async deleteCartProduct(cartID, product){
+        const toDelete  = await Cart.updateOne({_id: cartID}, {$pull: {products:product}})
+        return toDelete
     }
 
-    async addCartProduct(productID, cartID){
-        try{
-            const cart = await super.showElement(Cart, cartID)
-            const prod= Products.showProduct(productID)
-            cart.products.push(prod)
-            await super.update(cart)
-            console.log(cart)
-            return cart
-        }catch(error){
-            console.log(error)
-            myLoggerError.error("Error in addCartProduct " + error)
-        }
-    }
-
-    async deleteCartProduct(productID, cartID){
-        try{
-            const cart = await super.showElement(Cart, cartID)
-            cart.products = cart.products.filter(prod => prod != productID)
-            await super.update(cart)
-            return cart
-        }catch(error){
-            myLoggerError.error("Error in deleteCartProduct " + error)
-        }
+    async updateProduct(cartID, productID, cant){
+        await this.deleteCartProduct(productID)
+        const product = await Product.findById({_id:productID})
+        product.cant = cant
+        const addedProd = await Cart.updateOne({_id: cartID},{$addToSet: {products: product} }) ;
+      
+       return addedProd
     }
 
     async deleteCart(id){
-        try{
-            const toDelete = await super.delete(Cart, id)
-            return toDelete
-        }catch(error){
-            myLoggerError.error("Error in deleteCart " + error)
-        }
+        const toDelete = await CartDao.deleteOne({_id: id})
+        return toDelete
     }
 
-    async findByID(ID){
-        try{
-            const cart = await super.showElement(Cart, ID)
-            return cart
-        }catch(error){
-            myLoggerError.error("Error in findCart " + error)
-        }
-    }
 }
-
-module.exports = new DAOCarts()

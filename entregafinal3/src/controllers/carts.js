@@ -1,58 +1,83 @@
-require('dotenv').config()
-//const { render } = require('../app');
-const DAOCarts = require('../daos/DAOCarts')
+import cartServices from '../service/cartService'
+const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
 
 class cartController{
 
     async showCartProducts(req,res){
         
         console.log("CARRITO ACA ABAJO")
-        const cart= await DAOCarts.findByID(req.body)
-        const arr= await DAOCarts.showCartProducts(cart.email)
+        const cart= await cartServices.findByID(req.body)
+        const arr= await cartServices.showCartProducts(cart.email)
         res.render('cart', {arr})
     }
 
     async showCarts (req, res) {
-        const carts = await DAOCarts.showCarts()
-        res.send(carts)
-    }
+        try{
+            const carts = await cartServices.showCarts()
+            res.send(carts)
+        }catch(error){
+            myLoggerError.error("Error in showCarts " + error)
+        }
+    }  
 
     async addCart(req, res){
-        const savedCart = await DAOCarts.addCart(req.body.id)
-        res.status(201).send(savedCart)
+        try{
+            const savedCart = await cartServices.addCart()
+            res.status(201).send(savedCart)  
+        }catch(error){
+            myLoggerError.error("Error in addCart " + error)
+        }
     }
 
-    async findByID(id){
-        const carts = await DAOCarts.findByID(id)
-        res.send(carts)
+    async showCart(req,res){
+        try{
+            const id = req.params.cartID
+            const cart = await cartServices.showCart(id)
+            res.send(cart)
+        }catch(error){
+            myLoggerError.error("Error in showCart " + error)
+        }
     }
 
     async addCartProduct(req, res){
-        const cart= await DAOCarts.findByID(req.body.email)
-        if (cart==null){
-            console.log("carrito vacio")
-            cart=addCart(req.body.email)
+        const {cartID, productID, cant} = req.params
+        try {
+            const cart = await CartServices.addProdToCart(cartID, productID, cant)
+            res.status(201).send(cart) 
+        } catch (error) {
+            myLoggerError.error("Error in addCartProduct " + error) 
         }
-        console.log("carrito creado")
-        const id= req.params.id
-        cart = await DAOCarts.addCartProduct(id, req.body.email)
-        res.send(cart)
     }
 
     async deleteCartProduct(req, res){
-        const cart= await DAOCarts.findByID(req.body.email)
-        if (cart==null)
-            cart=addCart(req.body.email)
-        const id= req.params.id
-        cart = await DAOCarts.deleteCartProduct(id, req.body.email)
-        res.send(cart)
+        try{
+            const {idCart, idProduct} = req.params
+            const cart = await cartServices.deleteCartProduct(cartID, productID)
+            res.send(cart)
+        }catch(error){
+            myLoggerError.error("Error in deleteCartProduct " + error)
+        }
     }
 
     async deleteCart(req, res){
-        const toDelete = await DAOCarts.deleteCart(req.params.id)
-        res.send(toDelete)
+        try{
+            const id =  req.params.cartID
+            const cart =  await cartServices.deleteCart(id)
+            res.send(cart)
+        }catch(error){
+            myLoggerError.error("Error in deleteCart " + error)
+        } 
     }
 
+    async updateCartProduct(cartID, productID, cant){
+        const {cartID, productID, cant} = req.params
+        try {
+            const cart = await cartServices.updateCartProduct(cartID, productID, CanvasPattern)
+            return cart
+        } catch (error) {
+            myLoggerError.error("Error in deleteCartProduct " + error)
+        }
+    }
 }
 
 module.exports = new cartController()

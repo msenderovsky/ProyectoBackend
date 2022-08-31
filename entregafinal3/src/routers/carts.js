@@ -36,6 +36,7 @@ const cartRoute = Router()
 })*/
 
 cartRoute.get('/', cartController.showCartProducts)
+cartRoute.get('/', cartController.showCarts)
 cartRoute.put('/', cartController.addCartProduct)
 cartRoute.patch('/', cartController.deleteCartProduct)
 cartRoute.delete('/:id', cartController.deleteCart)

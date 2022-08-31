@@ -1,47 +1,77 @@
-require('dotenv').config()
-const DAOProducts = require('../daos/DAOProducts')
+import productService from "../service/productService";
+const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
 
-
-class productsController{
-
-    async saveProduct(req, res) {
-        const addedProduct = await DAOProducts.saveProduct(req.body)
-        res.send(addedProduct)
+class productController{ 
+    
+    async listProducts(req,res) {
+        try {
+            const products = await productService.listProducts()
+            res.send(products)
+        } catch (error) {
+            myLoggerError.error("Error in listProducts " + error)
+        }
+            
     }
-
-    async showProducts(req, res){
-        res.json({
-            error: null,
-            data: {
-                title: 'protegido',
-                user: req.user
+    async saveProducts(req,res){
+        try {
+            const product = req.body
+            const newProduct = await productService.saveProduct(product)
+            res.send(newProduct).status(201)
+        } catch (error) {
+            if(!product){
+                myLoggerError.error("Error in saveProducts " + error)
             }
-        })
-        const products = await DAOProducts.listProducts()
-        console.log(req.user)
-        res.render('products', products)
+            res.send(error)
+        }
+    }
+    async getOneProduct(req,res){
+        try {
+            const productID = req.params.productID;
+            const findProduct = await productService.findByiD(productID)
+            res.send(findProduct)
+        } catch (error) {
+            myLoggerError.error("Error in getProduct " + error)
+        }
+    }
+    async deleteProduct(req,res){
+        try {
+            const productID = req.params.productID;
+            const toDelete = await productService.deleteProduct(productID)
+            res.status(201).send(toDelete)
+        } catch (error) {
+            myLoggerError.error("Error in deleteProduct " + error)
+        }
+    }
+    async updateProduct(req,res){
+        try {
+            const productID = req.params.productID;
+            const body = req.body
+            const toUpdate = await productService.updateProduct(productID, body)
+            res.send(toUpdate)
+            
+        } catch (error) {
+            myLoggerError.error("Error in updateProduct " + error)
+        }
     }
 
-    async showCategory(req, res){
-        const products = await DAOProducts.listProducts()
-        const arr= products.filter(prod => prod.category=req.params.category)
-        res.send(arr)
-    }
-    
-    async showProduct(req, res){
-        const product = await DAOProducts.showProduct(req.params.id)
-        res.send(product)
-    }
-    
-    async updateProduct(req, res){
-        const product = await DAOProducts.updateProduct(req.body, req.params.id)
-        res.send(product)
+    async findCategory(req,res){
+        try {
+            const category = req.params.categoria
+            const toFind = await productService.findCategory(category)
+            res.send(toFind)
+        } catch (error) {
+            myLoggerError.error("Error in findCategory " + error)
+        }
     }
 
-    async deleteProduct(req, res){
-        const product = await DAOProducts.deleteProduct(req.params.id)
-        res.send(product)
+    async deleteProducts(req,res){
+        try {
+            const toDelete = await productService.deleteProducts()
+            res.status(201).send(toDelete)
+        } catch (error) {
+            myLoggerError.error("Error in deleteProducts " + error)
+        }
     }
 }
 
-module.exports = new productsController()
+module.exports = new productController()

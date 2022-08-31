@@ -1,19 +1,42 @@
-const MongoDBContainer = require('../container/MongoDBContainer')
-//const myLoggerError= require ('../service/logger.js')
-const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
+const User = require ("../models/users")
 
-class DAOUsers extends MongoDBContainer{
-    constructor(){
-        super()
+class DAOUsers {
+
+    async save(name,phone,email,passwordHash){
+       const save = await  User.create({
+        name: name,
+        phone: phone,
+        email: email,
+        password: passwordHash
+       })
+       return save 
     }
 
-    async addOUser(user){
-        try{
-            const savedUser = await super.save(user)
-        }catch(error){
-            myLoggerError.error("Error in addOrder " + error)
-        }
+    async getUsers() {
+        const users = await User.find()
+        return users 
     }
+
+    async findByID(id) {
+        const users = await User.findById({_id:id})
+        return users 
+    }
+
+    async deleteUser(id){
+        const toDelete = await User.findByIdAndDelete({_id: id})
+        return toDelete
+    }
+
+    async deleteAlUsersl(){
+        const toDelete = await User.deleteMany({})
+        return toDelete
+    }
+
+    async update(id){
+        const toUpdate = await User.findByIdAndUpdate({_id: id})
+        return toUpdate
+    }
+
 }
 
-module.exports = new DAOUsers()
+export default new DAOUsers()
