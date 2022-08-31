@@ -7,7 +7,8 @@ module.exports = class cartController{
         
         const cart= await cartService.findByID(req.params.id)
         const arr= await cartService.showCartProducts(cart)
-        res.render('cart', {arr})
+        res.send(arr)
+        //res.render('cart', {arr})
     }
 
     async showCarts (req, res) {

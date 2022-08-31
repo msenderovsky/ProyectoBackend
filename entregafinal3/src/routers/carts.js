@@ -6,12 +6,12 @@ const verifyToken = require ('../middlewares/auth')
 
 const cartRoute = Router()
 
-routeCart.get('/:idCart', validCartID, cartController.showCart)
-routeCart.get('/',  cartController.showCarts)
-routeCart.post('/', verifyToken,  cartController.addCart)
-routeCart.post('/:idCart/producto/:idProduct/cantidad/:quantity', validCartID,validProductID, cartController.addCartProduct)
-routeCart.delete('/:idCart', validCartID, cartController.deleteCart )
-routeCart.delete('/:idCart/producto/:idProduct', validCartID, validProductID, cartController.deleteCartProduct)
+cartRoute.get('/:cartID', validCartID, cartController.showCart)
+cartRoute.get('/',  cartController.showCarts)
+cartRoute.post('/', verifyToken,  cartController.addCart)
+cartRoute.post('/:cartID/producto/:productID/cantidad/:cant', validCartID,validProductID, cartController.addCartProduct)
+cartRoute.delete('/:cartID', validCartID, cartController.deleteCart )
+cartRoute.delete('/:cartID/producto/:productID', validCartID, validProductID, cartController.deleteCartProduct)
 
 
 module.exports = cartRoute

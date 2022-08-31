@@ -17,17 +17,17 @@ mongoose.connect(urlBase)
 
 /* WEBSOCKET */
 io.on("connection", async (socket) => {
-    console.log(`Nuevo cliente conectado ${socket.id}`);
+    console.log(`Cliente conectado ${socket.id}`);
   
     //------- Enviar histórico de mensajes
-    socket.emit("messages", await apiMessages.listAll());
+    socket.emit("messages", "mensaje inicial");
   
     //------- Escuchar nuevos mensajes
     socket.on("newMessage", async (msg) => {
         messageController.saveMessage(msg);
   
       //Actualización de la vista de mensajes
-      io.sockets.emit("messages", await apiMessages.listAll());
+      //io.sockets.emit("messages", await apiMessages.listAll());
     });
 });
 
