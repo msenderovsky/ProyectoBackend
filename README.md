@@ -36,7 +36,9 @@ Se usaron las siguientes variables de entorno
  
 ### /producto
 #### GET: "/" Trae todos los productos
+```
  > productos/
+ ```
 #### GET: "/:productID" Traer un producto por su ID
  > productos/:productID
 #### GET: "/categoria/:categoria" Retorna los productos de la categoría pedida
