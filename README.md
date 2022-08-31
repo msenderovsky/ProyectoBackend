@@ -13,15 +13,15 @@ Este proyecto consta de las siguientes librerias de dependencias:
 - Nodemailer
 
 ## Instalación de Dependencias
-
-> npm i {dependencia}
-
+```
+npm i {dependencia}
+```
 ## Ejecución del proyecto
 
 Para correrlo se usa el siguiente comando en la terminal:
-
-> node index.js
-
+```
+node index.js
+```
 ## Variables de Entorno
 
 Se usaron las siguientes variables de entorno
@@ -37,78 +37,132 @@ Se usaron las siguientes variables de entorno
 ### /producto
 #### GET: "/" Trae todos los productos
 ```
- > productos/
+productos/
  ```
 #### GET: "/:productID" Traer un producto por su ID
- > productos/:productID
+```
+productos/:productID
+```
 #### GET: "/categoria/:categoria" Retorna los productos de la categoría pedida
- > productos/categoria/:categoria
+```
+productos/categoria/:categoria
+```
 #### POST: "/" Agrega un producto a la base de datos
- > productos/
+```
+productos/
+```
 #### DELETE: "/:productID" Elimina un producto de la base de datos por el ID pasado
- > productos/:productID
+```
+productos/:productID
+```
 #### DELETE: "/delete/all" Elimina todos los productos de la base de datos
- > productos/delete/all
+```
+productos/delete/all
+```
 #### PUT "/:productID" Actualiza los productos por su ID
- > productos/:productID
+```
+productos/:productID
+```
  
  
 ### /carrito
 #### GET: "/" Trae todos los carritos
- > /carrito
+```
+/carrito
+```
 #### GET: "/:id" Trae un carrito por su ID
- > /carrito/:cartID
+```
+/carrito/:cartID
+```
 #### POST: "/" Agrega un carrito a la base de datos
- > /carrito/
+```
+/carrito/
+```
 #### POST: "/:cartID/producto/:productID/cantidad/:cant" Agrega un producto al carrito actual
- > /carrito/:cartID/producto/:productID/cantidad/:cant
+```
+/carrito/:cartID/producto/:productID/cantidad/:cant
+```
 #### DELETE: "/:id" Elimina un carrito por su ID
- > /carrito/:id
+```
+/carrito/:id
+```
 #### DELETE: "/:cartID/producto/:productID/cantidad/:cant" Elimina un productos del carrito
- > /carrito/:cartID/producto/:productID
+```
+/carrito/:cartID/producto/:productID
+```
 #### PUT "/:cartID/producto/:productID/cantidad/:cant" Actualiza los productos por ID del carrito seleccionado
- > /carrito/:cartID/producto/:productID/cantidad/:cant
+```
+/carrito/:cartID/producto/:productID/cantidad/:cant
+```
  
  
 ### /orders
 #### GET: "/" Trae todas las ordenes
- > /orders/
+```
+/orders/
+```
 #### GET: "/:id" Trae una orden por su ID
- > /orders/:orderID
+```
+/orders/:orderID
+```
 #### POST: "/:cartID" Agrega un carrito y genera una orden. Al finalizar la orden el carrito se elimina de la colección
- > /orders/:cartID
+```
+/orders/:cartID
+```
 #### DELETE: "/:orderID" Elimina una orden por su ID
- > /orders/:orderID
+```
+/orders/:orderID
+```
 #### DELETE: "/delete/all" Elimina todas las ordenes de compras actuales
- > /orders/delete/all
+```
+/orders/delete/all
+```
  
  
 ### /user
 #### GET: "/" Traer a todos los usuarios
- > /users/
+```
+/users/
+```
 #### GET: "/:id" Traer usuario por ID
- > /users/:id
+```
+/users/:id
+```
 #### DELETE: "/:id" Elimina una orden por ID
- /users/:id
+```
+/users/:id
+```
 #### DELETE: "/" Elimina a todos los usuarios
- > /users/
+```
+/users/
+```
  
  
 ### /chat
 #### POST: "/" Guarda un mensaje en la base de datos
- > /chat/
+```
+/chat/
+```
 #### GET: "/" Trae todos los mensajes
- > /chat/
+```
+/chat/
+```
 #### GET: "/:email" Trae los mensajes filtrados por el email especificado
- > /chat/:email
+```
+/chat/:email
+```
  
  
 ### /auth
 #### POST: "/register" Registra un usuario y lo almacena en la base de datos
- > /chat/register
+```
+/chat/register
+```
 #### POST: "/login" Loguea un usuario con un nombre y contraseña
- > /chat/login
+```
+/chat/login
+```
  
  
 ## Rutas Protegidas
-El usuario solo podrá acceder a la mayoria de los endpoints si se encuentra logueado en el sistema luego de un registro
+El usuario solo podrá acceder a la mayoria de los endpoints si se encuentra logueado en el sistema luego de un registro, así como también chequeos de errores de escritura en las peticiones
