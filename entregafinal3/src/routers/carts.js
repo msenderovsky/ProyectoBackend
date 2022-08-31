@@ -8,7 +8,7 @@ const jwt= require('jsonwebtoken')
 const cartRoute = Router()
 
 //cartRoute.get('/', cartController.showCart)
-cartRoute.get('/compra/:id', async(req,res)=>{
+/*cartRoute.get('/compra/:id', async(req,res)=>{
     try{
         const token= req.headers.token
         const datos= jwt.verify(token,'clave_secreta')
@@ -33,7 +33,7 @@ cartRoute.get('/compra/:id', async(req,res)=>{
         console.log(error)
         res.status(500).json({message:"Error realizando la compra"})
     }
-})
+})*/
 
 cartRoute.get('/', cartController.showCartProducts)
 cartRoute.put('/', cartController.addCartProduct)

@@ -3,6 +3,7 @@ const productsSchema = require('../models/products')
 const cartsSchema = require('../models/carts')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const DAOUsers = require('../daos/DAOUsers')
 const password = ""
 
 class AuthController {
@@ -28,11 +29,13 @@ class AuthController {
             phone: req.body.prefix + "-" + req.body.phone,
             password: password
         })
-        jwt.hash()
         const isEmailExist = await userModel.findOne({ email: req.body.email });
         if (isEmailExist) {
             return res.status(400).json({error: 'Email ya registrado'}) 
-        } else res.render('both')
+        } else {
+            DAOUsers.addOUser(user)
+            res.render('both')
+        }
     }
 
     async login(req,res){
