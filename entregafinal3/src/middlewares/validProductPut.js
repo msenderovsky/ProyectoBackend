@@ -1,7 +1,12 @@
-const { check} = require ('express-validator')
-const {validateResult} = require ('../../helpers/validProductPut')
+/*const { check} = require ('express-validator')
+const {validateResult} = require ('../helpers/validProductPut')
+*/
 
- export const validProductPut = [ 
+import { check} from 'express-validator'
+import { validateResult } from '../helpers/validProductPut.js'
+
+
+export const validProductPut = [ 
     check('name')
         .isString()
         .withMessage('Not a String'),

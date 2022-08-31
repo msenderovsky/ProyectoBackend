@@ -1,6 +1,7 @@
-const Product = require ("../models/products")
+//const Product = require ("../models/products")
+import Product from "../models/products.js"
 
-module.exports = class DAOProducts {
+class DAOProducts {
     
     async showProducts(){
         const prodList = await Product.find()
@@ -41,3 +42,5 @@ module.exports = class DAOProducts {
         return toDelete
     }
 }
+
+export default DAOProducts

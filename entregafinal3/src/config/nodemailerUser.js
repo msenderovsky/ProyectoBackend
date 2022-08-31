@@ -1,5 +1,6 @@
-import {createTransport} from 'nodemailer'
-import templateUserMail from './templateUserMail.js'
+//const {createTransport} =require ('nodemailer')
+
+import { createTransport } from 'nodemailer'
 
 const sendMailUser = async (user) => {
     const transporter = createTransport({

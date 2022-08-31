@@ -1,12 +1,11 @@
-const mongoose = require('mongoose');
-const app = require('./src/app')
-const express = require('express')
-const { Server: HttpServer } = require("http");
-const { Server: IOServer } = require("socket.io");
-require('dotenv').config()
-const messageController = require ('../service/messageController')
-
-require('dotenv').config()
+import mongoose from 'mongoose';
+import app from './src/app.js';
+import express from 'express';
+import { Server as HttpServer } from "http";
+import { Server as IOServer } from "socket.io";
+import messageService from './src/service/messageService.js';
+import 'dotenv/config';
+//require('dotenv').config()
 
 const PORT = process.env.PORT
 const urlBase = process.env.DB
@@ -24,7 +23,7 @@ io.on("connection", async (socket) => {
   
     //------- Escuchar nuevos mensajes
     socket.on("newMessage", async (msg) => {
-        messageController.saveMessage(msg);
+        messageService.saveMessage(msg);
   
       //Actualización de la vista de mensajes
       //io.sockets.emit("messages", await apiMessages.listAll());

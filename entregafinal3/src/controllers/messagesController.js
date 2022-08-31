@@ -1,6 +1,7 @@
-const messageService = require ('../service/messageService')
+//const messageService = require ('../service/messageService')
+import messageService from '../service/messageService.js'
 
-module.exports = class MessageController{
+class MessageController{
     async saveMessage(req,res){
         const {email, message} = req.body
         const newMessage = await messageService.saveMessage(email, message)
@@ -17,3 +18,5 @@ module.exports = class MessageController{
         res.send(messages)
     }}
 }
+
+export default new MessageController()

@@ -1,7 +1,10 @@
-const cartService = require ('../service/cartService')
-const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
+/*const cartService = require ('../service/cartService')
+const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')*/
 
-module.exports = class cartController{
+import {myLoggerError} from '../service/logger.js'
+import cartService from '../service/cartService.js'
+
+class cartController{
 
     async showCartProducts(req,res){
         
@@ -69,7 +72,7 @@ module.exports = class cartController{
         } 
     }
 
-    async updateCartProduct(cartID, productID, cant){
+    async updateCartProduct(req,res){
         const {cartID, productID, cant} = req.params
         try {
             const cart = await cartService.updateCartProduct(cartID, productID, cant)
@@ -79,3 +82,5 @@ module.exports = class cartController{
         }
     }
 }
+
+export default new cartController

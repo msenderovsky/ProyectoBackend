@@ -1,7 +1,7 @@
-import Cart from '../models/carts'
-import Product from '../models/products'
+import Cart from '../models/carts.js'
+import Product from '../models/products.js'
 
-module.exports = class DAOCart{
+class DAOCart{
 
     async showCartProducts() {
         const products = await Cart.products.find()
@@ -51,3 +51,5 @@ module.exports = class DAOCart{
         return toDelete
     }
 }
+
+export default new DAOCart

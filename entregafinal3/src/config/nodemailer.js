@@ -1,7 +1,14 @@
-const {createTransport} = require('nodemailer')
+/*const { createTransport } = require ('nodemailer')
 const TO_MAIL = process.env.MIMAIL
 const pw = process.env.PASS
-const products = order.products.map(({name,price,cant}))
+const products = order.products.map(({name,price,cant}))*/
+
+import products from order.products.map(({name,price,cant}))
+import TO_MAIL from process.env.MIMAIL
+import pw from process.env.PASS
+import { createTransport } from 'nodemailer'
+
+
 const sendMail = async (order) =>  {
 
     const transporter = createTransport({
@@ -28,4 +35,4 @@ const sendMail = async (order) =>  {
         console.log(info)
 }
 
-module.exports = {sendMail}
+export default {sendMail}

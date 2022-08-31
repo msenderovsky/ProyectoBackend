@@ -1,6 +1,6 @@
-const DAOProducts = require ("../daos/DAOProducts")
+import DAOProducts from "../daos/DAOProducts.js"
 
-module.exports = class productService {
+class productService {
 
     async showProducts() {
         const listProds = await DAOProducts.showProducts()
@@ -37,3 +37,5 @@ module.exports = class productService {
         return toDelete
     }
 }
+
+export default productService

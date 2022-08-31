@@ -1,6 +1,7 @@
-const DAOMessages = require ("../daos/DAOMessages")
+//const DAOMessages = require ("../daos/DAOMessages")
+import DAOMessages from "../daos/DAOMessages.js"
 
-module.exports = class Messages{
+class messageService{
 
     async saveMessage(email, message){
         const save = await DAOMessages.saveMessage(email, message)
@@ -17,3 +18,4 @@ module.exports = class Messages{
         return messages
     }
 }
+export default new messageService()

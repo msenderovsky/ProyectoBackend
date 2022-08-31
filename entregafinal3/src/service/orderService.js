@@ -1,8 +1,12 @@
-const DAOCarts = require ("../daos/DAOCarts")
+/*const DAOCarts = require ("../daos/DAOCarts")
 const DAOOrders = require ("../daos/DAOOrders")
-const sendMail = require ("../config/nodemailer.js")
+const sendMail = require("../config/nodemailer.js").default
+*/
+import DAOCarts from "../daos/DAOCarts.js"
+import DAOOrders from "../daos/DAOOrders.js"
+import sendMail from "../config/nodemailer.js"
 
-module.exports = class orderService {
+class orderService {
 
     async listOrders(){
         const orders = await DAOOrders.listOrders()
@@ -40,3 +44,5 @@ module.exports = class orderService {
     }
 
 }
+
+export default orderService

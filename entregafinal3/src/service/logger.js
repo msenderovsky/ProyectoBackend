@@ -1,4 +1,6 @@
-const log4js= require ('log4js')
+//const log4js= require ('log4js')
+import log4js from 'log4js'
+
 
 log4js.configure({
     appenders: {
@@ -17,6 +19,10 @@ log4js.configure({
     }
 })
 
-module.exports.logger = log4js.getLogger('default')
-module.exports.myLoggerWarn = log4js.getLogger('catWarn')
-module.exports.myLoggerError = log4js.getLogger('catError')
+export const logger = log4js.getLogger('default')
+export const myLoggerWarn = log4js.getLogger('warnLog')
+export const myLoggerError = log4js.getLogger('errorLog')
+
+   /* log4js.getLogger('default')
+export default log4js.getLogger('catWarn')
+export default log4js.getLogger('catError')*/

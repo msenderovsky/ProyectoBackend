@@ -1,7 +1,10 @@
-import productService from "../service/productService";
-const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
+/*const productService = require('../service/productService')
+const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')*/
 
-module.exports = class productController{ 
+import {myLoggerError} from '../service/logger.js'
+import productService from '../service/productService.js'
+class productsController{ 
+    
     
     async showProducts(req,res) {
         try {
@@ -73,3 +76,5 @@ module.exports = class productController{
         }
     }
 }
+
+export default new productsController

@@ -1,7 +1,10 @@
-const { check} = require ('express-validator')
-const {validateResult} = require ('../../helpers/validProductPost')
+/*const { check} = require ('express-validator')
+const {validateResult} = require ('../helpers/validProductPost')
+*/
+import { check} from 'express-validator'
+import { validateResult } from '../helpers/validProductPost.js'
 
- export const validProductPost = [ 
+export const validProductPost = [ 
     check('name')
         .exists()
         .isString()

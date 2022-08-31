@@ -1,6 +1,7 @@
-const Order = require('../models/orders')
+//const Order = require('../models/orders')
+import Order from "../models/orders"
 
-module.exports = class DAOOrders{
+class DAOOrders{
 
     async addOrder(cart, order, incOrder){
         if(!cart) return null
@@ -35,3 +36,5 @@ module.exports = class DAOOrders{
         return toDelete
     }
 }
+
+export default new DAOOrders

@@ -1,5 +1,9 @@
-const { check} = require ('express-validator')
-const {validateResult} = require ('../../helpers/validCartID')
+/*const { check} = require ('express-validator')
+const {validateResult} = require ('../helpers/validCartID')*/
+
+
+import { check} from 'express-validator'
+import { validateResult } from '../helpers/validCartID.js'
 
 export const validCartID = [
     check('cartID')

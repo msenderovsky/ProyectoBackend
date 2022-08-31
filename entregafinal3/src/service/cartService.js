@@ -1,7 +1,7 @@
-import DAOCart from '../daos/DAOCarts'
-import DAOProducts from '../daos/DAOProducts'
+import DAOCart from '../daos/DAOCarts.js'
+import DAOProducts from '../daos/DAOProducts.js'
 
-module.exports = class cartService{
+ class cartService{
 
     async showCartProducts(){
         const cart = await DAOCart.showCartProducts()
@@ -45,3 +45,5 @@ module.exports = class cartService{
         return cart
     }
 }
+
+export default cartService

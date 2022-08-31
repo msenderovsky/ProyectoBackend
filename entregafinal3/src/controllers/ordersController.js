@@ -1,7 +1,10 @@
-const orderService = require('../service/orderService')
-const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
+/*const orderService = require('../service/orderService')
+const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')*/
 
-module.exports = class orderController {
+import {myLoggerError} from '../service/logger.js'
+import orderService from '../service/orderService'
+
+class orderController {
 
     async listOrders(req,res){
         try {
@@ -51,3 +54,6 @@ module.exports = class orderController {
         }
     }
 }
+
+
+module.exports = {orderController}

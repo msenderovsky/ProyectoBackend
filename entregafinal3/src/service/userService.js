@@ -1,6 +1,6 @@
-const DAOUsers = require ("../daos/DAOUsers")
+import DAOUsers from "../daos/DAOUsers.js"
 
-module.exports = class userService {
+class userService {
     
     async save(body, passwordHash){
             const {name, phone, email} = body
@@ -33,3 +33,5 @@ module.exports = class userService {
         return update
     }
 }
+
+export default userService

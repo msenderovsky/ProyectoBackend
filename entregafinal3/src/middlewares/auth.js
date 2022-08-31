@@ -1,5 +1,9 @@
-import jwt from 'jsonwebtoken';
-const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
+/*const jwt = require  ('jsonwebtoken')
+const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')*/
+
+
+import jwt from 'jsonwebtoken'
+import { validateResult } from '../helpers/validCartID.js'
 
 const verifyToken = (req, res, next) => {
     const token = req.get('Authorization')
@@ -15,4 +19,4 @@ const verifyToken = (req, res, next) => {
     }
 };
 
-export default verifyToken;
+export default verifyToken

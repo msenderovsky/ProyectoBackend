@@ -1,6 +1,7 @@
-const User = require ("../models/users")
+//const User = require ("../models/users")
+import User from "../models/users.js"
 
-module.exports = class DAOUsers {
+class DAOUsers {
 
     async save(name,phone,email,passwordHash){
        const save = await  User.create({
@@ -38,3 +39,5 @@ module.exports = class DAOUsers {
     }
 
 }
+
+export default new DAOUsers

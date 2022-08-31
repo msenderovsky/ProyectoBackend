@@ -1,11 +1,20 @@
-const userModel = require('../models/users')
+/*const userModel = require('../models/users')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const userService = require ('../service/UserService')
 const sendMailUser = require ('../utils/nodemailerUser')
 const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
+*/
 
-module.exports = class authController {
+
+import {myLoggerError} from '../service/logger.js'
+import userModel from "../models/users.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import sendMailUser from "../config/nodemailerUser.js";
+import userService from "../service/UserService.js";
+
+class authController {
 
     async register(req, res) {
         try {
@@ -61,3 +70,5 @@ module.exports = class authController {
         // res.render('products')
     }
 }
+
+export default new authController

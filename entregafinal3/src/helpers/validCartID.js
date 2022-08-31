@@ -1,5 +1,8 @@
-const { validationResult } = require ("express-validator/src/validation-result.js")
-const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
+/*const { validationResult } = require ("express-validator/src/validation-result.js")
+const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')*/
+
+import { validationResult } from "express-validator/src/validation-result.js";
+import {myLoggerError} from '../service/logger.js'
 
 export const validateResult = (req,res,next) => {
     try {
