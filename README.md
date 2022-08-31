@@ -26,11 +26,11 @@ node index.js
 
 Se usaron las siguientes variables de entorno
 
- > DB= Clave de mongo atlas
- > SECRET=uso para el hasheo de contraseña
- > PASS= Contraseña de la autorización de gmail
- > MIMAIL= Mail que envia información de un nuevo registro de usuario y las órdenes de compra
- > MIMAIL2= Email que recibe la información de un nuevo registro de usuario y las órdenes de compra
+ - DB= Clave de mongo atlas
+ - SECRET=uso para el hasheo de contraseña
+ - PASS= Contraseña de la autorización de gmail
+ - MIMAIL= Mail que envia información de un nuevo registro de usuario y las órdenes de compra
+ - MIMAIL2= Email que recibe la información de un nuevo registro de usuario y las órdenes de compra
  
  ## Endpoints
  
