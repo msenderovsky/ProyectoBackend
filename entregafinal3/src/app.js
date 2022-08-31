@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const bodyparser = require('body-parser');
 const ejs = require('ejs')
 
 const productsRoutes = require('./routers/products')
@@ -12,8 +13,10 @@ app.set('views', __dirname + '/views/partials')
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+app.use(bodyparser.urlencoded({ extended: false }));
+app.use(bodyparser.json());
 
-app.use('/products', productsRoutes)
+app.use('/productos', productsRoutes)
 app.use('/carrito', cartsRoutes)
 app.use('/', routesAuth)
 

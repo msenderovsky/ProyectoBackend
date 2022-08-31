@@ -10,9 +10,22 @@ class productsController{
     }
 
     async showProducts(req, res){
+        res.json({
+            error: null,
+            data: {
+                title: 'protegido',
+                user: req.user
+            }
+        })
         const products = await DAOProducts.listProducts()
         console.log(req.user)
         res.render('products', products)
+    }
+
+    async showCategory(req, res){
+        const products = await DAOProducts.listProducts()
+        const arr= products.filter(prod => prod.category=req.params.category)
+        res.send(arr)
     }
     
     async showProduct(req, res){

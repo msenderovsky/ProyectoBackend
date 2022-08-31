@@ -3,6 +3,7 @@ const productsSchema = require('../models/products')
 const cartsSchema = require('../models/carts')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const password = ""
 
 class AuthController {
     constructor(){
@@ -20,28 +21,25 @@ class AuthController {
 
     async register(req,res){
         const salt = await bcrypt.genSalt(10)
-        const password = await bcrypt.hash(req.body.password, salt)
-        
+        password = await bcrypt.hash(req.body.password, salt)
         const user = await  userModel.create({
             name: req.body.name,
             email: req.body.email,
             phone: req.body.prefix + "-" + req.body.phone,
             password: password
         })
-        
-        res.render('both')
+        jwt.hash()
+        const isEmailExist = await userModel.findOne({ email: req.body.email });
+        if (isEmailExist) {
+            return res.status(400).json({error: 'Email ya registrado'}) 
+        } else res.render('both')
     }
 
     async login(req,res){
         console.log("testing")
         const user = await userModel.findOne({email: req.body.email})
-        console.log(user)
-        console.log("testing2")
         if(user){
             const equalsPassword = await bcrypt.compare(req.body.password, user.password)
-            console.log(equalsPassword)
-            console.log(req.body.password)
-
             if(equalsPassword) {
                 const datos = {
                     name : user.name,
@@ -49,15 +47,8 @@ class AuthController {
                     phone: user.phone
                 }
                 const token = jwt.sign(datos, 'clave_secreta')
-                console.log("----------a------------")
-                let cart= await cartsSchema.find(datos).email
-                console.log("---------b-------------")
-                if (cart==null)
-                    cart= await cartsSchema.create({email: datos.email})
-                console.log("------------------------")
-                console.log(cart)
                 const arr= await productsSchema.find()
-                const arr2=[datos, token, arr, cart]
+                const arr2=[datos, token, arr]
                 console.log(arr)
                 res.render('products', {arr2})
             } else {
@@ -69,18 +60,17 @@ class AuthController {
         }
     }
 
-    async products (req, res) {
-        
-        try { 
-            
-            logger.info('Se accedió a productos')
-            res.render('products', {
-                user: req.user, products
-            })
-        } catch (error) {
-            logger.error('Error en productos: ' + error)
-            res.send('Error')
-        }
+    async authenticateToken(req, res, next) {
+        const authHeader = req.headers['authorization']
+        const token = authHeader && authHeader.split(' ')[1]
+        const secret= jwt.decode(password)
+        if (token == null) return res.sendStatus(401)
+        jwt.verify(token, secret, (err, user) => {
+            console.log(err)
+            if (err) return res.sendStatus(403)
+            req.user = user
+            next()
+        })
     }
 }
 

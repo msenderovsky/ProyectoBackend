@@ -1,5 +1,6 @@
 const MongoDBContainer = require('../container/MongoDBContainer')
-const myLoggerError= require ('../service/logger.js')
+//const myLoggerError= require ('../service/logger.js')
+const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
 const Products = require('./DAOProducts')
 const Cart = require('../models/carts')
 
@@ -8,10 +9,11 @@ class DAOCarts extends MongoDBContainer{
         super()
     }
 
-    async addCart(){
+    async addCart(userMail){
         try{
             const cart = new Cart({
-                fecha: Date().toString()
+                fecha: Date().toString(),
+                email: userMail
             })
             const savedCart = await super.save(cart)
             return savedCart
@@ -24,6 +26,15 @@ class DAOCarts extends MongoDBContainer{
         try{
             const carts = await super.listSublist(Cart, 'products')
             return carts
+        }catch(error){
+            myLoggerError.error("Error in showCarts " + error)
+        }
+    }
+
+    async showCartProducts(ID){
+        try{
+            const cart = await super.showElement(Cart, ID)
+            return cart.products
         }catch(error){
             myLoggerError.error("Error in showCarts " + error)
         }
@@ -43,7 +54,7 @@ class DAOCarts extends MongoDBContainer{
         }
     }
 
-    async deleteCartProduct(cartID, productID){
+    async deleteCartProduct(productID, cartID){
         try{
             const cart = await super.showElement(Cart, cartID)
             cart.products = cart.products.filter(prod => prod != productID)
@@ -68,7 +79,7 @@ class DAOCarts extends MongoDBContainer{
             const cart = await super.showElement(Cart, ID)
             return cart
         }catch(error){
-            myLoggerError.error("Error in deleteCart " + error)
+            myLoggerError.error("Error in findCart " + error)
         }
     }
 }

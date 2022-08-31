@@ -22,7 +22,7 @@
                 </div>
                 <div class="d-flex">
                     <div class="collapse navbar-collapse">
-                        <button class="btn btn-dark" href="/carrito/" onclick="showCartProducts(arr2[3])">Carrito</button>
+                        <a class="btn btn-dark" href="/carrito/" onclick="showProducts(arr2[0].email)">Carrito</a>
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown">                                    
                                 Nombre: <%=arr2[0].name%>
@@ -64,10 +64,10 @@
                                 <td><%= product.description %></td>
                                 <td><%= product.price %></td>
                                 <td>
-                                    <button class="btn btn-dark" onclick="updCartAdd(product, arr2[3])">Agregar Item</button>
+                                    <button class="btn btn-dark" onclick="()=>console.log('click')">Agregar Item</button>
                                 </td>
                                 <td>
-                                    <button class="btn btn-dark" onclick="updCartDel(product, arr2[3])">Quitar Item</button>
+                                    <button class="btn btn-dark" onclick="updCartDel(product)">Quitar Item</button>
                                 </td>
                                 <% }) %>
                             <%  } %>
@@ -87,16 +87,30 @@
     </body>
     <script src="https://cdn.jsdelivr.net/npm/ejs@3.1.6/ejs.min.js"></script>
     <script>
-        function updCartAdd(product, cart) {
-            axios.put ("/carrito", {cart, product}) 
+        function updCartAdd(product) {
+            console.log("entre a agregar producto")
+            let user= arr2[0]
+            axios.put ("/carrito", {user, product}) 
                 .then (function (response) {
                     console.log(response)
             })
         }
     </script>
     <script>
-        function delCartAdd(product, cart) {
-
+        function delCartAdd(product) {
+            let user= arr2[0]
+            axios.put ("/carrito", {user, product}) 
+                .then (function (response) {
+                    console.log(response)
+            })
+        }
+    </script>
+    <script>
+        function showProducts(userMail) {
+            axios.get ("/carrito", {userMail}) 
+                .then (function (response) {
+                    console.log(response)
+            })
         }
     </script>
     <script src="../../client.js"></script>

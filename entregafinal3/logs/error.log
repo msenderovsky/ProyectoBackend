@@ -1,0 +1,6 @@
+[2022-08-30T14:24:23.695] [ERROR] catError - Error in deleteCart CastError: Cast to ObjectId failed for value "{}" (type Object) at path "_id" for model "carts"
+[2022-08-30T14:26:18.902] [ERROR] catError - Error in deleteCart CastError: Cast to ObjectId failed for value "{}" (type Object) at path "_id" for model "carts"
+[2022-08-30T14:26:18.961] [ERROR] catError - Error in showCarts TypeError: Cannot read properties of null (reading 'products')
+[2022-08-30T14:27:22.511] [ERROR] catError - Error in deleteCart CastError: Cast to ObjectId failed for value "{}" (type Object) at path "_id" for model "carts"
+[2022-08-30T14:27:22.563] [ERROR] catError - Error in showCarts TypeError: Cannot read properties of null (reading 'products')
+[2022-08-30T14:31:56.542] [ERROR] catError - Error in deleteCart CastError: Cast to ObjectId failed for value "{}" (type Object) at path "_id" for model "carts"

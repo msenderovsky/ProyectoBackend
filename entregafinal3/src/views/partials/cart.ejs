@@ -11,6 +11,7 @@
         <nav class="navbar navbar-expand-lg bg-danger">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">Carrito</a>
+                <button class="btn btn-dark" onclick="order()">Generar Orden</button>
             </div>
         </nav>
     </header>
@@ -30,9 +31,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <% if (cartArr.length>0) {
+                            <% if (arr.length>0) {
                             %>
-                                <% cartArr.forEach((product) => {
+                                <% arr.forEach((product) => {
                                 %>
                             <tr>
                                 <td><%= product.name %></td>
@@ -45,7 +46,17 @@
                         </tbody>
                     </table>
                 </div> 
-        </div>
+            </div>
+        </div> 
     </main>
 </body>
+<script>
+    function order(email) {
+            console.log("entre a agregar producto")
+            axios.post ("/", {email,user}) 
+                .then (function (response) {
+                    console.log(response)
+            })
+        }
+</script>
 </html>

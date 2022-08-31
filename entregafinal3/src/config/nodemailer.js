@@ -17,7 +17,7 @@ const sendMail = async (TEST_MAIL, productsString,user) =>  {
         from : TEST_MAIL,
         to: TO_MAIL,
         subject: 'Nuevo pedido de ',
-        html: `Hola ,
+        html: `Hola '${user}',
         'Gracias por su compra, a continuación un resumen de su pedido'
         '${productsString}'
 

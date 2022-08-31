@@ -11,15 +11,13 @@ require('dotenv').config()
 
 const PORT = process.env.PORT
 const urlBase = process.env.DB
-const tableProducts = "products";
 const tableMessages = "messages";
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
 
 const apiMessages = new Container(optionsSQLite, tableMessages);
-const apiProducts = new Container(optionsSQLite, tableProducts);
 
-if (process.env.ENVIRONMENT == 'mongo') mongoose.connect(urlBase)
+mongoose.connect(urlBase)
 
 app.use(session({
     secret: 'keyboard cat',
@@ -33,17 +31,9 @@ app.use(session({
     saveUninitialized: false
 }));
 
+/* WEBSOCKET */
 io.on("connection", async (socket) => {
     console.log(`Nuevo cliente conectado ${socket.id}`);
-    //------- Enviar histórico de productos
-    socket.emit("products", await apiProducts.listAll());
-  
-    //------- Escuchar nuevos productos
-    socket.on("newProduct", async (product) => {
-      await apiProducts.save(product);
-      //Actualización de la vista de productos
-      io.sockets.emit("products", await apiProducts.listAll());
-    });
   
     //------- Enviar histórico de mensajes
     socket.emit("messages", await apiMessages.listAll());

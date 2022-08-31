@@ -19,7 +19,7 @@ module.exports = class MongoDBContainer{
     }
     
     async showElement(data, id){
-        const element = await data.findOne({_id: id})
+        const element = await data.findOne({_email: id})
         return element
     }
     

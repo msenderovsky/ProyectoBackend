@@ -37,8 +37,9 @@ cartRoute.get('/compra/:id', async(req,res)=>{
 
 cartRoute.get('/', cartController.showCartProducts)
 cartRoute.put('/', cartController.addCartProduct)
-cartRoute.delete('/', cartController.deleteCartProduct)
+cartRoute.patch('/', cartController.deleteCartProduct)
 cartRoute.delete('/:id', cartController.deleteCart)
+cartRoute.put('/:id', cartController.deleteCart)
 
 
 module.exports = cartRoute

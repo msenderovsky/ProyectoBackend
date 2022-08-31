@@ -18,5 +18,5 @@ log4js.configure({
 })
 
 module.exports.logger = log4js.getLogger('default')
-module.exports.myLoggerWarn = log4js.getLogger('warnLog')
-module.exports.myLoggerError = log4js.getLogger('errorLog')
+module.exports.myLoggerWarn = log4js.getLogger('catWarn')
+module.exports.myLoggerError = log4js.getLogger('catError')

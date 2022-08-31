@@ -36,7 +36,7 @@ class DAOProducts extends MongoDBContainer{
             const product = await super.showElemento(Product, id)
             return product
         }catch(error){
-            myLoggerError.error("Error in showProduct " + error)
+            myLoggerError.error("Error: el producto no existe " + error)
         }
     }
     
