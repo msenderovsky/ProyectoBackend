@@ -1,11 +1,11 @@
 const { Router } = require('express')
-const messageController = require('../controllers/message')
+const messagesController = require('../controllers/messagesController')
 
 const meesageRoute = Router()
 
 
-meesageRoute.post('/' , messageController.saveMessage)
-meesageRoute.get('/', messageController.getMessages)
-meesageRoute.get('/:email', messageController.getEmailMessages)
+meesageRoute.post('/' , messagesController.saveMessage)
+meesageRoute.get('/', messagesController.getMessages)
+meesageRoute.get('/:email', messagesController.getEmailMessages)
 
 export default meesageRoute

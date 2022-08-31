@@ -1,4 +1,5 @@
 const userService = require ('../service/userService')
+const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
 
 module.exports = class userController {
 

@@ -1,13 +1,13 @@
 const { Router } = require('express')
-const userController = require('../controllers/users')
+const usersController = require('../controllers/usersController')
 const verifyToken = require ('../middlewares/auth')
 
 const userRoute = Router()
 
-userRoute.get('/' , verifyToken,  userController.getUsers )
-userRoute.get('/id' , verifyToken, userController.findByID )
-userRoute.delete('/:id', verifyToken, userController.deleteUser)
-userRoute.delete('/', verifyToken,  userController.deleteAllUsers )
-userRoute.put('/:id', verifyToken, userController.updateUser )
+userRoute.get('/' , verifyToken,  usersController.getUsers )
+userRoute.get('/id' , verifyToken, usersController.findByID )
+userRoute.delete('/:id', verifyToken, usersController.deleteUser)
+userRoute.delete('/', verifyToken,  usersController.deleteAllUsers )
+userRoute.put('/:id', verifyToken, usersController.updateUser )
 
 export default userRoute

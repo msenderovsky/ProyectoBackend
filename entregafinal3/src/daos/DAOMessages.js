@@ -1,4 +1,4 @@
-const Message = require ("../models/message")
+const Message = require ("../models/messages")
 
 module.exports = class DAOMessages{
     async saveMessage(email, message){
