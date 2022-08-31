@@ -1,6 +1,6 @@
 const User = require ("../models/users")
 
-class DAOUsers {
+module.exports = class DAOUsers {
 
     async save(name,phone,email,passwordHash){
        const save = await  User.create({
@@ -27,7 +27,7 @@ class DAOUsers {
         return toDelete
     }
 
-    async deleteAlUsersl(){
+    async deleteAllUsers(){
         const toDelete = await User.deleteMany({})
         return toDelete
     }
@@ -38,5 +38,3 @@ class DAOUsers {
     }
 
 }
-
-export default new DAOUsers()

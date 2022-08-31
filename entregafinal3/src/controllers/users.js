@@ -1,6 +1,6 @@
-import userService from "../service/user.services.js"
+const userService = require ('../service/userService')
 
-class userController {
+module.exports = class userController {
 
     async getUsers(req,res){
         try {
@@ -31,12 +31,13 @@ class userController {
             return 
         }
     }
-    async deleteUsers(req,res){
+
+    async deleteAllUsers(req,res){
         try {
-            const toDelete = await userService.deleteUsers()
+            const toDelete = await userService.deleteAllUsers()
             res.send(toDelete)
         } catch (error) {
-            myLoggerError.error("Error in deleteUsers " + error)
+            myLoggerError.error("Error in deleteAllUsers " + error)
             return 
         }
     }
@@ -50,5 +51,3 @@ class userController {
         }
     }
 }
-
-export default new userController()

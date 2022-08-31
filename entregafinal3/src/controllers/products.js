@@ -1,11 +1,11 @@
 import productService from "../service/productService";
 const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
 
-class productController{ 
+module.exports = class productController{ 
     
-    async listProducts(req,res) {
+    async showProducts(req,res) {
         try {
-            const products = await productService.listProducts()
+            const products = await productService.showProducts()
             res.send(products)
         } catch (error) {
             myLoggerError.error("Error in listProducts " + error)
@@ -24,11 +24,11 @@ class productController{
             res.send(error)
         }
     }
-    async getOneProduct(req,res){
+    async showProduct(req,res){
         try {
             const productID = req.params.productID;
-            const findProduct = await productService.findByiD(productID)
-            res.send(findProduct)
+            const toFind = await productService.findByiD(productID)
+            res.send(toFind)
         } catch (error) {
             myLoggerError.error("Error in getProduct " + error)
         }
@@ -64,14 +64,12 @@ class productController{
         }
     }
 
-    async deleteProducts(req,res){
+    async deleteAllProducts(req,res){
         try {
-            const toDelete = await productService.deleteProducts()
+            const toDelete = await productService.deleteAllProducts()
             res.status(201).send(toDelete)
         } catch (error) {
             myLoggerError.error("Error in deleteProducts " + error)
         }
     }
 }
-
-module.exports = new productController()

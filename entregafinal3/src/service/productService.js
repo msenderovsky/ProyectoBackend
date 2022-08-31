@@ -2,8 +2,8 @@ const DAOProducts = require ("../daos/DAOProducts")
 
 module.exports = class productService {
 
-    async listProducts() {
-        const listProds = await DAOProducts.listProducts()
+    async showProducts() {
+        const listProds = await DAOProducts.showProducts()
         return listProds
     }
 
@@ -32,8 +32,8 @@ module.exports = class productService {
         return categoryFind
     }
 
-    async deleteProducts(){
-        const toDelete = await DAOProducts.deleteProducts()
+    async deleteAllProducts(){
+        const toDelete = await DAOProducts.deleteAllProducts()
         return toDelete
     }
 }

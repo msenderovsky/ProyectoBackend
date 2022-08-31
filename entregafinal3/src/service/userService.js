@@ -1,6 +1,6 @@
 const DAOUsers = require ("../daos/DAOUsers")
 
-class userService {
+module.exports = class userService {
     
     async save(body, passwordHash){
             const {name, phone, email} = body
@@ -23,8 +23,8 @@ class userService {
           return toDelete
     }
 
-    async deleteAlUsersl(){
-        const toDelete = await DAOUsers.deleteAlUsersl()
+    async deleteAllUsers(){
+        const toDelete = await DAOUsers.deleteAllUsers()
         return toDelete
     }
     
@@ -33,5 +33,3 @@ class userService {
         return update
     }
 }
-
-export default new userService()

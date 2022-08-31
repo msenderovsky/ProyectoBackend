@@ -1,7 +1,7 @@
 const cartService = require ('../service/cartService')
 const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
 
-class cartController{
+module.exports = class cartController{
 
     async showCartProducts(req,res){
         
@@ -78,5 +78,3 @@ class cartController{
         }
     }
 }
-
-module.exports = new cartController()

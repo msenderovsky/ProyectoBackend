@@ -1,18 +1,19 @@
 const DAOMessages = require ("../daos/DAOMessages")
 
 module.exports = class Messages{
+
     async saveMessage(email, message){
-        const save = await Message.saveMessage(email, message)
+        const save = await DAOMessages.saveMessage(email, message)
         return save
     }
 
     async getMessages(){
-        const messages = await Message.getMessages()
+        const messages = await DAOMessages.getMessages()
         return messages
     }
 
-    async getMessagesByEmail(email){
-        const messages = await Message.getMessagesByEmail(email)
+    async getEmailMessages(email){
+        const messages = await DAOMessages.getEmailMessages(email)
         return messages
     }
 }

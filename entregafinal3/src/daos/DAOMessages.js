@@ -1,6 +1,6 @@
 const Message = require ("../models/message")
 
-class DAOMessages{
+module.exports = class DAOMessages{
     async saveMessage(email, message){
         const save = await Message.create({
             date: Date.now(),
@@ -15,10 +15,8 @@ class DAOMessages{
         return messages
     }
 
-    async getMessagesByEmail(email){
+    async getEmailMessages(email){
         const messages = await Message.find({email:email})
         return messages
     }
 }
-
-export default new DAOMessages()

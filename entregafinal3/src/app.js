@@ -1,13 +1,13 @@
 const express = require('express')
 const app = express()
-const bodyparser = require('body-parser');
 const ejs = require('ejs')
 
 const productsRoutes = require('./routers/products')
 const cartsRoutes = require('./routers/carts')
-const routesAuth = require('./routers/auth')
+const authRoutes = require('./routers/auth')
+const orderRoutes = require('./routers/auth')
+const messageRoutes = require('./routers/messages')
 
-console.log(process.env.ENVIRONMENT)
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views/partials')
 
@@ -18,9 +18,8 @@ app.use(bodyparser.json());
 
 app.use('/productos', productsRoutes)
 app.use('/carrito', cartsRoutes)
-app.use('/', routesAuth)
-
-
-
+app.use('/auth', authRoutes)
+app.use('/chat', messageRoutes)
+app.use('/orders', orderRoutes)
 
 module.exports = app

@@ -1,67 +1,63 @@
 const userModel = require('../models/users')
-const productsSchema = require('../models/products')
-const cartsSchema = require('../models/carts')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const DAOUsers = require('../daos/DAOUsers')
-const password = ""
+const userService = require ('../service/UserService')
+const sendMailUser = require ('../utils/nodemailerUser')
+const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
 
-class AuthController {
-    constructor(){
+module.exports = class authController {
 
-    }
-    renderLogin(req,res){
-        res.render('products')
-    }
-    renderRegister(req,res){
-        res.render('both')
-    }
-    renderBoth(req,res){
-        res.render('both')
-    }
-
-    async register(req,res){
-        const salt = await bcrypt.genSalt(10)
-        password = await bcrypt.hash(req.body.password, salt)
-        const user = await  userModel.create({
-            name: req.body.name,
-            email: req.body.email,
-            phone: req.body.prefix + "-" + req.body.phone,
-            password: password
-        })
-        const isEmailExist = await userModel.findOne({ email: req.body.email });
-        if (isEmailExist) {
-            return res.status(400).json({error: 'Email ya registrado'}) 
-        } else {
-            DAOUsers.addOUser(user)
-            res.render('both')
-        }
-    }
-
-    async login(req,res){
-        console.log("testing")
-        const user = await userModel.findOne({email: req.body.email})
-        if(user){
-            const equalsPassword = await bcrypt.compare(req.body.password, user.password)
-            if(equalsPassword) {
-                const datos = {
-                    name : user.name,
-                    email: user.email,
-                    phone: user.phone
-                }
-                const token = jwt.sign(datos, 'clave_secreta')
-                const arr= await productsSchema.find()
-                const arr2=[datos, token, arr]
-                console.log(arr)
-                res.render('products', {arr2})
-            } else {
-                res.send('Reescriba sus datos ')
+    async register(req, res) {
+        try {
+            const password = req.body.password;
+            const passwordVerification = req.body.passwordVerification;
+            if (password !== passwordVerification) {
+                myLoggerError.error("Error in register " + error)
+                return
             }
-                
-        }else {
-            res.send('Los campos no coinciden')
+            const salt = await bcrypt.genSalt(10);
+            const passwordHash = await bcrypt.hash(password, salt);
+            const userExist = await userModel.exists({ email: req.body.email });
+            if (userExist) {
+                myLoggerError.error("Error in register " + error)
+                return      
+            } 
+            const user = await userService.save(req.body, passwordHash)
+            const data = {
+                name: user.name,
+                password: user.password,
+            };
+            const token = jwt.sign(data, process.env.SECRET);
+            const  tokenAge = (24 * 60 * 60) // 1 dia
+            await sendMailUser(user)
+            res.cookie("token", token, { maxAge: tokenAge })
+            res.send(token)
+        } catch (error) {
+            res.send(error);
         }
+    }
+
+    async login(req, res) {
+        const user = await userModel.findOne({ email: req.body.email });
+        if(!user){
+            myLoggerError.error("Error in login: user not found " + error)
+            return
+        }
+        const pw = await bcrypt.compare(req.body.password,user.password)
+
+        if(!pw){
+            myLoggerError.error("Error in login: wrong credentials" + error)
+            return
+        }
+        const data = {
+            email: user.email,
+            name: user.name,
+        };
+        const  tokenAge = ( 24 * 60 * 60) // 1 dia
+        const token = jwt.sign(data, process.env.SECRET);
+        res.cookie("token", token, { maxAge: tokenAge })
+        res.cookie("email", data.email , { maxAge: tokenAge })
+        res.send(token)
+        // res.render('products')
     }
 }
-
-module.exports = new AuthController()

@@ -1,15 +1,15 @@
 const Product = require ("../models/products")
 
-class DAOProducts {
+module.exports = class DAOProducts {
     
-    async listProducts(){
+    async showProducts(){
         const prodList = await Product.find()
         return prodList
     }
 
     async saveProduct(product) {
-        const addProduct = await Product.create(product)
-        return addProduct
+        const newProduct = await Product.create(product)
+        return newProduct
     }
 
     async findByID(productID) {
@@ -36,10 +36,8 @@ class DAOProducts {
         const updProduct = await Product.findByIdAndUpdate({_id: productID},{$set:{cant:cant}})
         return updProduct
     }
-    async deleteProducts(){
+    async deleteAllProducts(){
         const toDelete = await Product.deleteMany({})
         return toDelete
     }
 }
-
-export default new DAOProducts()

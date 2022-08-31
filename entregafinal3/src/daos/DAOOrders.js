@@ -1,6 +1,6 @@
 const Order = require('../models/orders')
 
-class DAOOrders{
+module.exports = class DAOOrders{
 
     async addOrder(cart, order, incOrder){
         if(!cart) return null
@@ -35,5 +35,3 @@ class DAOOrders{
         return toDelete
     }
 }
-
-module.exports = new DAOOrders()

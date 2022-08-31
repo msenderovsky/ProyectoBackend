@@ -1,7 +1,7 @@
 const orderService = require('../service/orderService')
 const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
 
-class orderController {
+module.exports = class orderController {
 
     async listOrders(req,res){
         try {
@@ -51,5 +51,3 @@ class orderController {
         }
     }
 }
-
-module.exports = new orderController()
