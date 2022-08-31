@@ -3,9 +3,14 @@ import DAOProducts from '../daos/DAOProducts'
 
 module.exports = class cartService{
 
-    async showCarts(){
-        const cart = await DAOCart.getCarts()
+    async showCartProducts(){
+        const cart = await DAOCart.showCartProducts()
         return cart
+    }
+
+    async showCarts(){
+        const carts = await DAOCart.showCarts()
+        return carts
     }
 
     async showCart(id){
@@ -35,8 +40,8 @@ module.exports = class cartService{
         return updProduct
     }
 
-   async deleteCart(id){
-        const cart = await DAOCart.deleteCartById(id)
+    async deleteCart(id){
+        const cart = await DAOCart.deleteCart(id)
         return cart
     }
 }

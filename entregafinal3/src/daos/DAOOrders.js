@@ -9,7 +9,7 @@ class DAOOrders{
                     email: order.email,
                     adress: order.adress,
                     products: cart.products,
-                    numberOrder: incOrder
+                    orderNumber: incOrder
                 }
             )
         return order
@@ -30,7 +30,7 @@ class DAOOrders{
         return toDelete
     }
 
-    async deleteAllOrders(id){
+    async deleteAllOrders(){
         const toDelete  = await Order.deleteMany({})
         return toDelete
     }

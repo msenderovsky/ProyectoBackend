@@ -3,11 +3,16 @@ import Product from '../models/products'
 
 module.exports = class DAOCart{
 
+    async showCartProducts() {
+        const products = await Cart.products.find()
+        return products
+    }
+   
     async addCart() {
-        const addedCart = await Cart.create({
+        const newCart = await Cart.create({
             date: Date().toString()
         })
-        return addedCart
+        return newCart
     }
 
     async showCarts(){
@@ -37,14 +42,12 @@ module.exports = class DAOCart{
         await this.deleteCartProduct(productID)
         const product = await Product.findById({_id:productID})
         product.cant = cant
-        const addedProd = await Cart.updateOne({_id: cartID},{$addToSet: {products: product} }) ;
-      
-       return addedProd
+        const updProd = await Cart.updateOne({_id: cartID},{$addToSet: {products: product} }) ;
+       return updProd
     }
 
     async deleteCart(id){
-        const toDelete = await CartDao.deleteOne({_id: id})
+        const toDelete = await Cart.deleteOne({_id: id})
         return toDelete
     }
-
 }

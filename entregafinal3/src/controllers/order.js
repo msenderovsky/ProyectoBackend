@@ -1,4 +1,4 @@
-const orderService = require('../daos/DAOOrders')
+const orderService = require('../service/orderService')
 const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
 
 class orderController {

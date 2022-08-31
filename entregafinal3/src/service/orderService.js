@@ -1,5 +1,5 @@
 const DAOCarts = require ("../daos/DAOCarts")
-const DAOOrders = require ("../daos/DAOrders")
+const DAOOrders = require ("../daos/DAOOrders")
 const sendMail = require ("../config/nodemailer.js")
 
 module.exports = class orderService {
@@ -20,7 +20,7 @@ module.exports = class orderService {
         const lastOrder = orders.at(-1) 
         let incOrder; 
         if(orders.length !== 0 ){
-            incOrder = lastOrder.numberOrder + 1
+            incOrder = lastOrder.orderNumber + 1
         } else {
             incOrder = 1
         }

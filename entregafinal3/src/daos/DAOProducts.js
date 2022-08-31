@@ -23,8 +23,8 @@ class DAOProducts {
     }
 
     async updateProduct(productID, body){
-        const updatedProduct = await Product.findByIdAndUpdate(productID,body)
-        return updateProduct
+        const updProduct = await Product.findByIdAndUpdate(productID,body)
+        return updProduct
     }
 
     async findCategory(category){

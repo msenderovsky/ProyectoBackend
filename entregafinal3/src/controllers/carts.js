@@ -5,9 +5,8 @@ class cartController{
 
     async showCartProducts(req,res){
         
-        console.log("CARRITO ACA ABAJO")
-        const cart= await cartService.findByID(req.body)
-        const arr= await cartService.showCartProducts(cart.email)
+        const cart= await cartService.findByID(req.params.id)
+        const arr= await cartService.showCartProducts(cart)
         res.render('cart', {arr})
     }
 
@@ -20,15 +19,6 @@ class cartController{
         }
     }  
 
-    async addCart(req, res){
-        try{
-            const savedCart = await cartService.addCart()
-            res.status(201).send(savedCart)  
-        }catch(error){
-            myLoggerError.error("Error in addCart " + error)
-        }
-    }
-
     async showCart(req,res){
         try{
             const id = req.params.cartID
@@ -39,10 +29,19 @@ class cartController{
         }
     }
 
+    async addCart(req, res){
+        try{
+            const newCart = await cartService.addCart()
+            res.status(201).send(newCart)  
+        }catch(error){
+            myLoggerError.error("Error in addCart " + error)
+        }
+    }
+
     async addCartProduct(req, res){
         const {cartID, productID, cant} = req.params
         try {
-            const cart = await cartService.addProdToCart(cartID, productID, cant)
+            const cart = await cartService.addCartProduct(cartID, productID, cant)
             res.status(201).send(cart) 
         } catch (error) {
             myLoggerError.error("Error in addCartProduct " + error) 
@@ -51,7 +50,7 @@ class cartController{
 
     async deleteCartProduct(req, res){
         try{
-            const {idCart, idProduct} = req.params
+            const {cartID, productID} = req.params
             const cart = await cartService.deleteCartProduct(cartID, productID)
             res.send(cart)
         }catch(error){
@@ -62,7 +61,7 @@ class cartController{
     async deleteCart(req, res){
         try{
             const id =  req.params.cartID
-            const cart =  await cartServices.deleteCart(id)
+            const cart =  await cartService.deleteCart(id)
             res.send(cart)
         }catch(error){
             myLoggerError.error("Error in deleteCart " + error)
@@ -72,10 +71,10 @@ class cartController{
     async updateCartProduct(cartID, productID, cant){
         const {cartID, productID, cant} = req.params
         try {
-            const cart = await cartServices.updateCartProduct(cartID, productID, CanvasPattern)
+            const cart = await cartService.updateCartProduct(cartID, productID, cant)
             return cart
         } catch (error) {
-            myLoggerError.error("Error in deleteCartProduct " + error)
+            myLoggerError.error("Error in updateCartProduct " + error)
         }
     }
 }
