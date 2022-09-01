@@ -19,7 +19,7 @@ const orderRoute = Router()
 orderRoute.get('/', verifyToken, ordersController.listOrders)
 orderRoute.get('/:orderID',verifyToken, ordersController.listOrder)
 orderRoute.post('/:cartID',verifyToken, ordersController.newOrder)
-orderRoute.delete('/:idOrder', verifyToken, ordersController.deleteOrder)
+orderRoute.delete('/:orderID', verifyToken, ordersController.deleteOrder)
 orderRoute.delete('/delete/all', verifyToken,  ordersController.deleteAllOrders)
 
 

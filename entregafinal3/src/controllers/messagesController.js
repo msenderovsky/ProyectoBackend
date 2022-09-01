@@ -3,8 +3,10 @@ import messageService from '../service/messageService.js'
 
 class MessageController{
     async saveMessage(req,res){
-        const {email, message} = req.body
-        const newMessage = await messageService.saveMessage(email, message)
+        const {email, body} = req.body
+        console.log("aaaaaaaaaaaaaaaaaaaaa " + req.body)
+        console.log( "controler "+ email)
+        const newMessage = await messageService.saveMessage(email, body)
         return newMessage
     }
 

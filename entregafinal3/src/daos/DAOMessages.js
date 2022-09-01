@@ -3,6 +3,8 @@ import Message from "../models/messages.js"
 
 class DAOMessages{
     async saveMessage(email, message){
+        console.log("bbbbbbbbb " + email)
+        console.log(message)
         const save = await Message.create({
             date: Date.now(),
             email: email,

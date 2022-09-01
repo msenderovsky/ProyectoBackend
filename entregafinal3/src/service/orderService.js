@@ -35,7 +35,7 @@ class orderService {
     }
 
     async deleteByID(orderID){
-        const toDelete = await DAOOrders.deleteById(orderID)
+        const toDelete = await DAOOrders.deleteByID(orderID)
         return toDelete
     }
     async deleteAllOrders(){

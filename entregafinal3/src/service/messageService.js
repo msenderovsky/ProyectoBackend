@@ -4,6 +4,8 @@ import DAOMessages from "../daos/DAOMessages.js"
 class messageService{
 
     async saveMessage(email, message){
+        console.log(email)
+        console.log(message)
         const save = await DAOMessages.saveMessage(email, message)
         return save
     }
