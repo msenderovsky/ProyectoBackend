@@ -21,23 +21,26 @@ class authController {
             const password = req.body.password;
             const passwordVerification = req.body.passwordVerification;
             if (password !== passwordVerification) {
-                myLoggerError.error("Error in register " + error)
+                myLoggerError.error("Error in register contraseña")
                 return
             }
             const salt = await bcrypt.genSalt(10);
             const passwordHash = await bcrypt.hash(password, salt);
             const userExist = await userModel.exists({ email: req.body.email });
             if (userExist) {
-                myLoggerError.error("Error in register " + error)
+                myLoggerError.error("Error in register usuario")
                 return      
             } 
+        
             const user = await userService.save(req.body, passwordHash)
+            
             const data = {
                 name: user.name,
                 password: user.password,
             };
             const token = jwt.sign(data, process.env.SECRET);
             const  tokenAge = (24 * 60 * 60) // 1 dia
+            
             await sendMailUser(user)
             res.cookie("token", token, { maxAge: tokenAge })
             res.send(token)
@@ -49,24 +52,30 @@ class authController {
     async login(req, res) {
         const user = await userModel.findOne({ email: req.body.email });
         if(!user){
-            myLoggerError.error("Error in login: user not found " + error)
+            res.status(400).send("Revise si el usuario y la contraseña son correctos")
             return
         }
         const pw = await bcrypt.compare(req.body.password,user.password)
 
         if(!pw){
-            myLoggerError.error("Error in login: wrong credentials" + error)
+            myLoggerError.error("Error in login: wrong credentials" )
             return
         }
         const data = {
             email: user.email,
             name: user.name,
         };
-        const  tokenAge = ( 24 * 60 * 60) // 1 dia
+        const tokenAge = ( 24 * 60 * 60) // 1 dia
         const token = jwt.sign(data, process.env.SECRET);
-        res.cookie("token", token, { maxAge: tokenAge })
-        res.cookie("email", data.email , { maxAge: tokenAge })
-        res.send(token)
+        /*res.cookie("token", token, { maxAge: tokenAge })
+        res.cookie("email", data.email , { maxAge: tokenAge })*/
+        console.log("llego")
+        //res.send(token)
+        console.log(token)
+        res.cookie('auth', token, {
+            maxAge: tokenAge
+        })
+        res.status(200).send()
         // res.render('products')
     }
 }

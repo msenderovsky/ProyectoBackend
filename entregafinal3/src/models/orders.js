@@ -4,10 +4,10 @@ import mongoose from "mongoose";
 
 
 const orderSchema = new mongoose.Schema({
-    products: [{ type: Schema.Types.ObjectId, ref: 'products' }],
+    products: [],
     orderNumber: Number,
     date: Date,
-    state: "generado",
+    state: String,
     email: String,
     address: String
 })

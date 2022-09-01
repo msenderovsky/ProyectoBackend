@@ -6,7 +6,7 @@ const verifyToken = require ('../middlewares/auth')
 
 import {Router} from 'express'
 import usersController from '../controllers/usersController.js'
-import verifyToken from '../middlewares/auth/auth.js'
+import verifyToken from '../middlewares/auth.js'
 
 const userRoute = Router()
 

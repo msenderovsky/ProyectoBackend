@@ -3,8 +3,12 @@ import DAOUsers from "../daos/DAOUsers.js"
 class userService {
     
     async save(body, passwordHash){
-            const {name, phone, email} = body
+            const name= body.name
+            const phone=body.phone
+            const email=body.email
+            console.log(name + " " + phone +    " ")
             const save = await DAOUsers.save(name, phone, email, passwordHash)
+            console.log(save)
             return(save)
     } 
 
@@ -34,4 +38,4 @@ class userService {
     }
 }
 
-export default userService
+export default new userService()

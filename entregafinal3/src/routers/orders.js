@@ -17,9 +17,9 @@ import verifyToken from '../middlewares/auth.js'
 const orderRoute = Router()
 
 orderRoute.get('/', verifyToken, ordersController.listOrders)
-orderRoute.get('/:orderID',[verifyToken, validOrderID], ordersController.listOrder)
-orderRoute.post('/:cartID',[verifyToken,  validCartID],  ordersController.newOrder)
-orderRoute.delete('/:idOrder', [verifyToken, validOrderID], ordersController.deleteOrder)
+orderRoute.get('/:orderID',verifyToken, ordersController.listOrder)
+orderRoute.post('/:cartID',verifyToken, ordersController.newOrder)
+orderRoute.delete('/:idOrder', verifyToken, ordersController.deleteOrder)
 orderRoute.delete('/delete/all', verifyToken,  ordersController.deleteAllOrders)
 
 

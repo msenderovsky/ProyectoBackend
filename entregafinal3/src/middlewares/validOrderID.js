@@ -3,7 +3,7 @@ const {validateResult} = require ('../helpers/validOrderID')*/
 
 
 import { check} from 'express-validator'
-import { validateResult } from '../helpers/validOrderID'
+//import { validateResult } from '../helpers/validOrderID'
 
 export const validOrderID = [
     check('orderID')

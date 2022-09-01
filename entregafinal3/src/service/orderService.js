@@ -18,9 +18,9 @@ class orderService {
         return toFind
     }
 
-    async addOrder(cartID,order){
+    async newOrder(cartID,order){
         const cart = await DAOCarts.showCart(cartID)
-        const orders = await listOrders()
+        const orders = await this.listOrders()
         const lastOrder = orders.at(-1) 
         let incOrder; 
         if(orders.length !== 0 ){
@@ -28,7 +28,7 @@ class orderService {
         } else {
             incOrder = 1
         }
-        const newOrder = await DAOOrders.addOrder(cart,order, incOrder)
+        const newOrder = await DAOOrders.newOrder(cart,order, incOrder)
         await sendMail(newOrder)
         await DAOCarts.deleteCart(cartID) 
         return newOrder
@@ -45,4 +45,4 @@ class orderService {
 
 }
 
-export default orderService
+export default new orderService()

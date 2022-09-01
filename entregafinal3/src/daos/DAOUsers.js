@@ -40,4 +40,4 @@ class DAOUsers {
 
 }
 
-export default new DAOUsers
+export default new DAOUsers()

@@ -13,12 +13,12 @@ import verifyToken from '../middlewares/auth.js'
 
 const cartRoute = Router()
 
-cartRoute.get('/:cartID', validCartID, cartsController.showCart)
-cartRoute.get('/',  cartsController.showCarts)
-cartRoute.post('/', verifyToken,  cartsController.addCart)
-cartRoute.post('/:cartID/producto/:productID/cantidad/:cant', validCartID,validProductID, cartsController.addCartProduct)
-cartRoute.delete('/:cartID', validCartID, cartsController.deleteCart )
-cartRoute.delete('/:cartID/producto/:productID', validCartID, validProductID, cartsController.deleteCartProduct)
+cartRoute.get('/:cartID', cartsController.showCart)
+cartRoute.get('/', cartsController.showCarts)
+cartRoute.post('/', verifyToken, cartsController.addCart)
+cartRoute.post('/:cartID/producto/:productID/cantidad/:cant', cartsController.addCartProduct)
+cartRoute.delete('/:cartID', cartsController.deleteCart )
+cartRoute.delete('/:cartID/producto/:productID', cartsController.deleteCartProduct)
 
 
 export default cartRoute

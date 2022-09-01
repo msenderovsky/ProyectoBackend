@@ -22,4 +22,4 @@ class DAOMessages{
     }
 }
 
-export default new DAOMessages
+export default new DAOMessages()

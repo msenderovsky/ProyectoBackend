@@ -1,7 +1,7 @@
 /*const userService = require ('../service/userService')
 const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')*/
 import {myLoggerError} from '../service/logger.js'
-import userService from '../service/userService'
+import userService from '../service/userService.js'
 class userController {
 
     async getUsers(req,res){

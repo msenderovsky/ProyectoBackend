@@ -33,7 +33,7 @@ class DAOProducts {
         return categoryFind
     }
 
-    async updateProduct(productID, cant){
+    async updateProductQuantity(productID, cant){
         const updProduct = await Product.findByIdAndUpdate({_id: productID},{$set:{cant:cant}})
         return updProduct
     }
@@ -43,4 +43,4 @@ class DAOProducts {
     }
 }
 
-export default DAOProducts
+export default new DAOProducts()

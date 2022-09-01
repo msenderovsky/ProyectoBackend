@@ -16,8 +16,9 @@ class productsController{
             
     }
     async saveProducts(req,res){
+        const product = req.body
         try {
-            const product = req.body
+            console.log(product)
             const newProduct = await productService.saveProduct(product)
             res.send(newProduct).status(201)
         } catch (error) {

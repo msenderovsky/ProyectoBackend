@@ -6,13 +6,11 @@ import { check} from 'express-validator'
 import { validateResult } from '../helpers/validProductID.js'
 
 export const validProductID = [
-    check('idProduct')
+    check('_id')
     .exists()
-    .withMessage('You have tu add an request Product id ')
+    .withMessage('You have to add a request Product id ')
     .isString()
-    .withMessage('Must be an String')
-    .isLength({min:24, max:24})
-    .withMessage('must be 24 chars'),
+    .withMessage('Must be an String'),
     (req,res,next) => {
         validateResult(req,res,next)
     } 

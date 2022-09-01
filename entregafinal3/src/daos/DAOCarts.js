@@ -52,4 +52,4 @@ class DAOCart{
     }
 }
 
-export default new DAOCart
+export default new DAOCart()

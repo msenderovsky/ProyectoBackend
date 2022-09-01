@@ -30,7 +30,7 @@ import DAOProducts from '../daos/DAOProducts.js'
 
     
     async deleteCartProduct(cartID, productID){
-        const product = await DAOProducts.findById(productID)
+        const product = await DAOProducts.findByID(productID)
         const cart = await DAOCart.deleteCartProduct(cartID, product)
         return cart
     }
@@ -46,4 +46,4 @@ import DAOProducts from '../daos/DAOProducts.js'
     }
 }
 
-export default cartService
+export default new cartService()

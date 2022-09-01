@@ -16,15 +16,25 @@ import verifyToken from '../middlewares/auth.js'
 const productRoute = Router()
 
 //console.log(productsController.showProducts())
-
+/*
 productRoute.get('/', verifyToken, productsController.showProducts )
 productRoute.post('/', [verifyToken, validProductPost], productsController.saveProducts )
 productRoute.get('/:productID', [verifyToken, validProductID], productsController.showProduct)
 productRoute.get('/categoria/:categoria', verifyToken, productsController.findCategory)
 productRoute.delete('/:productID', [verifyToken, validProductID], productsController.deleteProduct)
 productRoute.delete('/delete/all', verifyToken, productsController.deleteAllProducts )
-productRoute.put('/:productID', [verifyToken, validProductID], productsController.updateProduct )
+productRoute.put('/:productID', [verifyToken, validProductID], productsController.updateProduct )*/
 
+
+
+
+productRoute.get('/', verifyToken, productsController.showProducts )
+productRoute.post('/', verifyToken, productsController.saveProducts )
+productRoute.get('/:productID', verifyToken, productsController.showProduct)
+productRoute.get('/categoria/:categoria', verifyToken, productsController.findCategory)
+productRoute.delete('/:productID', verifyToken, productsController.deleteProduct)
+productRoute.delete('/delete/all', verifyToken, productsController.deleteAllProducts )
+productRoute.put('/:productID', verifyToken, productsController.updateProduct )
 
 
 export default productRoute

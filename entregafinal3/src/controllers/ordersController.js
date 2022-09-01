@@ -2,7 +2,7 @@
 const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')*/
 
 import {myLoggerError} from '../service/logger.js'
-import orderService from '../service/orderService'
+import orderService from '../service/orderService.js'
 
 class orderController {
 
@@ -25,14 +25,14 @@ class orderController {
         }
     }
 
-    async addOrder(req,res){
+    async newOrder(req,res){
         try {
             const cartID = req.params.cartID
             const order = req.body
-            const newOrder = await orderService.addOrder(cartID, order)
+            const newOrder = await orderService.newOrder(cartID, order)
             res.send(newOrder)
         } catch (error) {
-            myLoggerError.error("Error in addOrder " + error)
+            myLoggerError.error("Error in newOrder " + error)
         }
     }
     
@@ -56,4 +56,4 @@ class orderController {
 }
 
 
-module.exports = {orderController}
+export default new orderController()

@@ -1,11 +1,11 @@
 //const Order = require('../models/orders')
-import Order from "../models/orders"
+import Order from "../models/orders.js"
 
 class DAOOrders{
 
-    async addOrder(cart, order, incOrder){
+    async newOrder(cart, order, incOrder){
         if(!cart) return null
-        const order = await Order.create(
+        const newOrder = await Order.create(
                 {   date: new Date(),
                     email: order.email,
                     adress: order.adress,
@@ -13,7 +13,7 @@ class DAOOrders{
                     orderNumber: incOrder
                 }
             )
-        return order
+        return newOrder
     }
 
     async listOrder (orderID) {
@@ -37,4 +37,4 @@ class DAOOrders{
     }
 }
 
-export default new DAOOrders
+export default new DAOOrders()
