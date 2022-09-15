@@ -1,12 +1,7 @@
-/*const { Router } = require('express')
-const messagesController = require('../controllers/messagesController')
-*/
-
 import {Router} from 'express'
 import messagesController from '../controllers/messagesController.js'
 
 const meesageRoute = Router()
-
 
 meesageRoute.post('/' , messagesController.saveMessage)
 meesageRoute.get('/', messagesController.getMessages)

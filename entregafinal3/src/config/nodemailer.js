@@ -6,8 +6,8 @@ const products = order.products.map(({name,price,cant}))*/
 import { createTransport } from 'nodemailer'
 
 const pw= process.env.PASS
-//const  TO_MAIL = process.env.MIMAIL
-//const  TEST_MAIL = process.env.MIMAIL2
+const TO_MAIL = process.env.MIMAIL
+const FROM_MAIL = process.env.MIMAIL2
 
 const sendMail = async (order) =>  {
 
@@ -16,13 +16,13 @@ const sendMail = async (order) =>  {
         service: 'gmail',
         port: 587,
         auth: {
-            user: "marcos_senderovsky@hotmail.com",
-            pass: 'qmsowdpabbzjupcl'
+            user: TO_MAIL,
+            pass: pw
         }
     });
     const mailOptions = {
-        from : "msenderovsky@gmail.com",
-        to: "marcos_senderovsky@hotmail.com",
+        from : FROM_MAIL,
+        to: TO_MAIL,
         subject: 'Nuevo compra',
         html: `Hola',
         'Gracias por su compra, a continuación un resumen de su pedido'

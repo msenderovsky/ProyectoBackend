@@ -1,5 +1,3 @@
-//const {createTransport} =require ('nodemailer')
-
 import { createTransport } from 'nodemailer'
 
 const sendMailUser = async (user) => {

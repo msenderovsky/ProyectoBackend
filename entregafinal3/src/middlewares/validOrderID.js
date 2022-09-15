@@ -1,9 +1,4 @@
-/*const { check} = require ('express-validator')
-const {validateResult} = require ('../helpers/validOrderID')*/
-
-
-import { check} from 'express-validator'
-//import { validateResult } from '../helpers/validOrderID'
+import { check } from 'express-validator'
 
 export const validOrderID = [
     check('orderID')

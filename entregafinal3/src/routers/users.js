@@ -1,9 +1,3 @@
-/*const { Router } = require('express')
-const usersController = require('../controllers/usersController')
-const verifyToken = require ('../middlewares/auth')
-*/
-
-
 import {Router} from 'express'
 import usersController from '../controllers/usersController.js'
 import verifyToken from '../middlewares/auth.js'

@@ -1,4 +1,3 @@
-//const Product = require ("../models/products")
 import Product from "../models/products.js"
 
 class DAOProducts {

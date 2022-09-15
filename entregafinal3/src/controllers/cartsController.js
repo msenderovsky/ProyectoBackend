@@ -1,6 +1,3 @@
-/*const cartService = require ('../service/cartService')
-const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')*/
-
 import {myLoggerError} from '../service/logger.js'
 import cartService from '../service/cartService.js'
 
@@ -11,7 +8,6 @@ class cartController{
         const cart= await cartService.findByID(req.params.id)
         const arr= await cartService.showCartProducts(cart)
         res.send(arr)
-        //res.render('cart', {arr})
     }
 
     async showCarts (req, res) {

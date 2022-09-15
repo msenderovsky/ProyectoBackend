@@ -1,7 +1,4 @@
-/*const orderService = require('../service/orderService')
-const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')*/
-
-import {myLoggerError} from '../service/logger.js'
+import { myLoggerError } from '../service/logger.js'
 import orderService from '../service/orderService.js'
 
 class orderController {

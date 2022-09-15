@@ -1,7 +1,4 @@
-/*const { check} = require ('express-validator')
-const {validateResult} = require ('../helpers/validProductPost')
-*/
-import { check} from 'express-validator'
+import { check } from 'express-validator'
 import { validateResult } from '../helpers/validProductPost.js'
 
 export const validProductPost = [ 
@@ -24,14 +21,7 @@ export const validProductPost = [
         .not()
         .isEmpty()
         .withMessage('Empty field')
-        , 
-    check('image')
-        .exists()
-        .isString()
-        .withMessage('Not a string')
-        .not()
-        .isEmpty()
-        .withMessage('Empty field'),
+        ,
     check('price')
         .exists()
         .isNumeric()

@@ -1,12 +1,3 @@
-/*const userModel = require('../models/users')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
-const userService = require ('../service/UserService')
-const sendMailUser = require ('../utils/nodemailerUser')
-const  { logger, myLoggerWarn, myLoggerError } = require ('../service/logger.js')
-*/
-
-
 import {myLoggerError} from '../service/logger.js'
 import userModel from "../models/users.js";
 import bcrypt from "bcrypt";
@@ -28,7 +19,7 @@ class authController {
             const passwordHash = await bcrypt.hash(password, salt);
             const userExist = await userModel.exists({ email: req.body.email });
             if (userExist) {
-                myLoggerError.error("Error in register usuario")
+                myLoggerError.error("Error in user register")
                 return      
             } 
         
@@ -39,7 +30,7 @@ class authController {
                 password: user.password,
             };
             const token = jwt.sign(data, process.env.SECRET);
-            const  tokenAge = (24 * 60 * 60) // 1 dia
+            const  tokenAge = (24 * 60 * 60) // 1 day
             
             await sendMailUser(user)
             res.cookie("token", token, { maxAge: tokenAge })
@@ -52,7 +43,7 @@ class authController {
     async login(req, res) {
         const user = await userModel.findOne({ email: req.body.email });
         if(!user){
-            res.status(400).send("Revise si el usuario y la contraseña son correctos")
+            res.status(400).send("Check username and password")
             return
         }
         const pw = await bcrypt.compare(req.body.password,user.password)
@@ -67,16 +58,12 @@ class authController {
         };
         const tokenAge = ( 24 * 60 * 60) // 1 dia
         const token = jwt.sign(data, process.env.SECRET);
-        /*res.cookie("token", token, { maxAge: tokenAge })
-        res.cookie("email", data.email , { maxAge: tokenAge })*/
         console.log("llego")
-        //res.send(token)
         console.log(token)
         res.cookie('auth', token, {
             maxAge: tokenAge
         })
         res.status(200).send()
-        // res.render('products')
     }
 }
 

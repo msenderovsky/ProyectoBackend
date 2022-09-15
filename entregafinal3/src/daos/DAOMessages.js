@@ -1,4 +1,3 @@
-//const Message = require ("../models/messages")
 import Message from "../models/messages.js"
 
 class DAOMessages{

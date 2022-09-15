@@ -1,4 +1,3 @@
-//const Order = require('../models/orders')
 import Order from "../models/orders.js"
 
 class DAOOrders{

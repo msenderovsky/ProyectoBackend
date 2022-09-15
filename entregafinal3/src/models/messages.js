@@ -1,5 +1,3 @@
-
-
 import mongoose from "mongoose";
 
 const messagesSchema = new mongoose.Schema({

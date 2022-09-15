@@ -1,4 +1,3 @@
-//const User = require ("../models/users")
 import User from "../models/users.js"
 
 class DAOUsers {

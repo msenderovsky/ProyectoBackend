@@ -1,11 +1,9 @@
 import mongoose from 'mongoose';
 import app from './src/app.js';
-import express from 'express';
 import { Server as HttpServer } from "http";
 import { Server as IOServer } from "socket.io";
 import messageService from './src/service/messageService.js';
 import 'dotenv/config';
-//require('dotenv').config()
 
 const PORT = process.env.PORT
 const urlBase = process.env.DB

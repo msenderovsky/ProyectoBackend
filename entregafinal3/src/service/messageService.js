@@ -1,4 +1,3 @@
-//const DAOMessages = require ("../daos/DAOMessages")
 import DAOMessages from "../daos/DAOMessages.js"
 
 class messageService{

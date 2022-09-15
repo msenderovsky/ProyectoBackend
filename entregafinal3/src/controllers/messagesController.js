@@ -1,4 +1,3 @@
-//const messageService = require ('../service/messageService')
 import messageService from '../service/messageService.js'
 
 class MessageController{
